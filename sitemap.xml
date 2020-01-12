@@ -3,11 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://sandszy.github.io/categories/</loc>
+    <loc>http://sandszy.github.io/post/first/</loc>
+    <lastmod>2020-01-12T16:04:37+08:00</lastmod>
   </url>
   
   <url>
     <loc>http://sandszy.github.io/</loc>
+    <lastmod>2020-01-12T16:04:37+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://sandszy.github.io/post/</loc>
+    <lastmod>2020-01-12T16:04:37+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://sandszy.github.io/about/</loc>
+    <lastmod>2020-01-12T16:02:14+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://sandszy.github.io/categories/</loc>
   </url>
   
   <url>
