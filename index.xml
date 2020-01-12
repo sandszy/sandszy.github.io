@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>My New Hugo Site</title>
-    <link>http://sandszy.github.io/</link>
+    <link>https://sandszy.github.io/</link>
     <description>Recent content on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 12 Jan 2020 16:04:37 +0800</lastBuildDate>
     
-	<atom:link href="http://sandszy.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://sandszy.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>First</title>
-      <link>http://sandszy.github.io/post/first/</link>
+      <link>https://sandszy.github.io/post/first/</link>
       <pubDate>Sun, 12 Jan 2020 16:04:37 +0800</pubDate>
       
-      <guid>http://sandszy.github.io/post/first/</guid>
+      <guid>https://sandszy.github.io/post/first/</guid>
       <description>Hello Hugo  aaa bbb ccc  </description>
     </item>
     
     <item>
       <title>About</title>
-      <link>http://sandszy.github.io/about/</link>
+      <link>https://sandszy.github.io/about/</link>
       <pubDate>Sun, 12 Jan 2020 16:02:14 +0800</pubDate>
       
-      <guid>http://sandszy.github.io/about/</guid>
+      <guid>https://sandszy.github.io/about/</guid>
       <description></description>
     </item>
     
