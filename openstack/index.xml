@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Openstacks on watchout</title>
+    <link>https://sandszy.github.io/openstack/</link>
+    <description>Recent content in Openstacks on watchout</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 12 Jan 2020 18:38:50 +0800</lastBuildDate>
+    
+	<atom:link href="https://sandszy.github.io/openstack/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Neutron</title>
+      <link>https://sandszy.github.io/openstack/neutron/</link>
+      <pubDate>Sun, 12 Jan 2020 18:38:50 +0800</pubDate>
+      
+      <guid>https://sandszy.github.io/openstack/neutron/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
