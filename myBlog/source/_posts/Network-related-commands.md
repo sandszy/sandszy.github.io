@@ -1,7 +1,10 @@
 ---
 title: Network related commands
 date: 2021-09-19 22:29:48
+categories:
+- network
 tags:
+- command
 ---
 ## IP地址和路由配置
 ```shell
