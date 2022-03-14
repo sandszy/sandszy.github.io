@@ -39,3 +39,6 @@ HBase：HBase是Hadoop的**数据库**，一个分布式、可扩展、大数据
 4. 数据应用从HBase查询数据；
 
 ![1](1.png)
+
+
+{% asset_img 1.png This is an image %}
