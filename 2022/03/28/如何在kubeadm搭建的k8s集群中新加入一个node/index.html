@@ -21,28 +21,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"sandszy.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="IP地址和路由配置1234#!&#x2F;bin&#x2F;baship link set eth0 upip addr add 192.168.221.10&#x2F;24 dev eth0ip route add default via 192.168.221.2 dev eth0 onlink  科学上网配置#!&#x2F;bin&#x2F;bash export http_proxy&#x3D;http:&#x2F;&#x2F;192.168.159.1:7890 e">
+    <meta name="description" content="创建虚拟机以opensuse_leap_15.3_node0为模板复制一个新的node节点虚拟机">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Network related commands">
-<meta property="og:url" content="http://sandszy.github.io/2021/09/19/Network-related-commands/index.html">
+<meta property="og:title" content="如何在kubeadm搭建的k8s集群中新加入一个node">
+<meta property="og:url" content="http://sandszy.github.io/2022/03/28/%E5%A6%82%E4%BD%95%E5%9C%A8kubeadm%E6%90%AD%E5%BB%BA%E7%9A%84k8s%E9%9B%86%E7%BE%A4%E4%B8%AD%E6%96%B0%E5%8A%A0%E5%85%A5%E4%B8%80%E4%B8%AAnode/index.html">
 <meta property="og:site_name" content="All things are dificult before they are easy.">
-<meta property="og:description" content="IP地址和路由配置1234#!&#x2F;bin&#x2F;baship link set eth0 upip addr add 192.168.221.10&#x2F;24 dev eth0ip route add default via 192.168.221.2 dev eth0 onlink  科学上网配置#!&#x2F;bin&#x2F;bash export http_proxy&#x3D;http:&#x2F;&#x2F;192.168.159.1:7890 e">
+<meta property="og:description" content="创建虚拟机以opensuse_leap_15.3_node0为模板复制一个新的node节点虚拟机">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-09-19T14:29:48.000Z">
-<meta property="article:modified_time" content="2022-03-11T15:23:31.355Z">
+<meta property="article:published_time" content="2022-03-28T14:57:27.000Z">
+<meta property="article:modified_time" content="2022-03-29T15:16:03.228Z">
 <meta property="article:author" content="sandszy">
-<meta property="article:tag" content="command">
+<meta property="article:tag" content="kubernetes">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://sandszy.github.io/2021/09/19/Network-related-commands/">
+<link rel="canonical" href="http://sandszy.github.io/2022/03/28/%E5%A6%82%E4%BD%95%E5%9C%A8kubeadm%E6%90%AD%E5%BB%BA%E7%9A%84k8s%E9%9B%86%E7%BE%A4%E4%B8%AD%E6%96%B0%E5%8A%A0%E5%85%A5%E4%B8%80%E4%B8%AAnode/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://sandszy.github.io/2021/09/19/Network-related-commands/","path":"2021/09/19/Network-related-commands/","title":"Network related commands"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://sandszy.github.io/2022/03/28/%E5%A6%82%E4%BD%95%E5%9C%A8kubeadm%E6%90%AD%E5%BB%BA%E7%9A%84k8s%E9%9B%86%E7%BE%A4%E4%B8%AD%E6%96%B0%E5%8A%A0%E5%85%A5%E4%B8%80%E4%B8%AAnode/","path":"2022/03/28/如何在kubeadm搭建的k8s集群中新加入一个node/","title":"如何在kubeadm搭建的k8s集群中新加入一个node"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Network related commands | All things are dificult before they are easy.</title>
+<title>如何在kubeadm搭建的k8s集群中新加入一个node | All things are dificult before they are easy.</title>
   
 
 
@@ -110,7 +110,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#IP%E5%9C%B0%E5%9D%80%E5%92%8C%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">IP地址和路由配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">科学上网配置</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">1.</span> <span class="nav-text">创建虚拟机</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -171,7 +171,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://sandszy.github.io/2021/09/19/Network-related-commands/">
+    <link itemprop="mainEntityOfPage" href="http://sandszy.github.io/2022/03/28/%E5%A6%82%E4%BD%95%E5%9C%A8kubeadm%E6%90%AD%E5%BB%BA%E7%9A%84k8s%E9%9B%86%E7%BE%A4%E4%B8%AD%E6%96%B0%E5%8A%A0%E5%85%A5%E4%B8%80%E4%B8%AAnode/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -184,12 +184,12 @@
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Network related commands | All things are dificult before they are easy.">
+      <meta itemprop="name" content="如何在kubeadm搭建的k8s集群中新加入一个node | All things are dificult before they are easy.">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Network related commands
+          如何在kubeadm搭建的k8s集群中新加入一个node
         </h1>
 
         <div class="post-meta-container">
@@ -200,23 +200,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2021-09-19 22:29:48" itemprop="dateCreated datePublished" datetime="2021-09-19T22:29:48+08:00">2021-09-19</time>
+      <time title="Created: 2022-03-28 22:57:27" itemprop="dateCreated datePublished" datetime="2022-03-28T22:57:27+08:00">2022-03-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-03-11 23:23:31" itemprop="dateModified" datetime="2022-03-11T23:23:31+08:00">2022-03-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/network/" itemprop="url" rel="index"><span itemprop="name">network</span></a>
-        </span>
+      <time title="Modified: 2022-03-29 23:16:03" itemprop="dateModified" datetime="2022-03-29T23:16:03+08:00">2022-03-29</time>
     </span>
 
   
@@ -229,13 +220,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="IP地址和路由配置"><a href="#IP地址和路由配置" class="headerlink" title="IP地址和路由配置"></a>IP地址和路由配置</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">ip link set eth0 up</span><br><span class="line">ip addr add 192.168.221.10/24 dev eth0</span><br><span class="line">ip route add default via 192.168.221.2 dev eth0 onlink</span><br></pre></td></tr></table></figure>
-
-<h2 id="科学上网配置"><a href="#科学上网配置" class="headerlink" title="科学上网配置"></a>科学上网配置</h2><pre><code class="shell">#!/bin/bash
-export http_proxy=http://192.168.159.1:7890
-export https_proxy=http://192.168.159.1:7890
-export no_proxy=localhost,127.0.0.1
-</code></pre>
+        <h1 id="创建虚拟机"><a href="#创建虚拟机" class="headerlink" title="创建虚拟机"></a>创建虚拟机</h1><p>以opensuse_leap_15.3_node0为模板复制一个新的node节点虚拟机</p>
 
     </div>
 
@@ -245,17 +230,20 @@ export no_proxy=localhost,127.0.0.1
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/command/" rel="tag"># command</a>
+              <a href="/tags/kubernetes/" rel="tag"># kubernetes</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
+                <a href="/2022/03/22/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" rel="prev" title="强化学习基本概念">
+                  <i class="fa fa-chevron-left"></i> 强化学习基本概念
+                </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/09/19/How-to-create-a-custom-controller/" rel="next" title="How to create a custom controller">
-                  How to create a custom controller <i class="fa fa-chevron-right"></i>
+                <a href="/2022/03/29/%E5%85%B3%E4%BA%8E%E8%AF%81%E4%BC%AA%E4%B8%BB%E4%B9%89%E5%92%8C%E5%8F%AF%E8%AF%81%E4%BC%AA%E6%80%A7/" rel="next" title="关于证伪主义和可证伪性">
+                  关于证伪主义和可证伪性 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
