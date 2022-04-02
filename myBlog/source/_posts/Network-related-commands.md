@@ -20,4 +20,15 @@ ip route add default via 192.168.221.2 dev eth0 onlink
 export http_proxy=http://192.168.159.1:7890
 export https_proxy=http://192.168.159.1:7890
 export no_proxy=localhost,127.0.0.1
+```
+
+## opensuse leap 15.3重启网络链接
+
+```shell
+#查看配置
+sudo nmcli connection show eth0
+#重启生效
+sudo nmcli connection down eth0
+sudo nmcli connection up eth0
+```
 
