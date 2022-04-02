@@ -467,7 +467,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-03-11 23:23:31" itemprop="dateModified" datetime="2022-03-11T23:23:31+08:00">2022-03-11</time>
+      <time title="Modified: 2022-04-01 20:29:25" itemprop="dateModified" datetime="2022-04-01T20:29:25+08:00">2022-04-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -491,11 +491,10 @@
     <div class="post-body" itemprop="articleBody">
           <h2 id="IP地址和路由配置"><a href="#IP地址和路由配置" class="headerlink" title="IP地址和路由配置"></a>IP地址和路由配置</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">ip link set eth0 up</span><br><span class="line">ip addr add 192.168.221.10/24 dev eth0</span><br><span class="line">ip route add default via 192.168.221.2 dev eth0 onlink</span><br></pre></td></tr></table></figure>
 
-<h2 id="科学上网配置"><a href="#科学上网配置" class="headerlink" title="科学上网配置"></a>科学上网配置</h2><pre><code class="shell">#!/bin/bash
-export http_proxy=http://192.168.159.1:7890
-export https_proxy=http://192.168.159.1:7890
-export no_proxy=localhost,127.0.0.1
-</code></pre>
+<h2 id="科学上网配置"><a href="#科学上网配置" class="headerlink" title="科学上网配置"></a>科学上网配置</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">export http_proxy=http://192.168.159.1:7890</span><br><span class="line">export https_proxy=http://192.168.159.1:7890</span><br><span class="line">export no_proxy=localhost,127.0.0.1</span><br></pre></td></tr></table></figure>
+
+<h2 id="opensuse-leap-15-3重启网络链接"><a href="#opensuse-leap-15-3重启网络链接" class="headerlink" title="opensuse leap 15.3重启网络链接"></a>opensuse leap 15.3重启网络链接</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">查看配置</span></span><br><span class="line">sudo nmcli connection show eth0</span><br><span class="line"><span class="meta">#</span><span class="bash">重启生效</span></span><br><span class="line">sudo nmcli connection down eth0</span><br><span class="line">sudo nmcli connection up eth0</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
