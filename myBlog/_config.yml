@@ -69,6 +69,7 @@ index_generator:
 default_category: uncategorized
 category_map:
 tag_map:
+  kubernetes: k8s
 
 # Metadata elements
 ## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
