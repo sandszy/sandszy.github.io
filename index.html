@@ -125,7 +125,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -164,6 +164,130 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://sandszy.github.io/2022/04/28/%E8%B5%84%E6%BA%90%E6%B7%B7%E9%83%A8%E7%A0%94%E7%A9%B6%E7%BA%AA%E8%A6%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sandszy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="All things are dificult before they are easy.">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | All things are dificult before they are easy.">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/28/%E8%B5%84%E6%BA%90%E6%B7%B7%E9%83%A8%E7%A0%94%E7%A9%B6%E7%BA%AA%E8%A6%81/" class="post-title-link" itemprop="url">资源混部研究纪要</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-04-28 19:57:50" itemprop="dateCreated datePublished" datetime="2022-04-28T19:57:50+08:00">2022-04-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-06-01 22:19:30" itemprop="dateModified" datetime="2022-06-01T22:19:30+08:00">2022-06-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><h2 id="深入理解百度在离线混部技术"><a href="#深入理解百度在离线混部技术" class="headerlink" title="深入理解百度在离线混部技术"></a>深入理解百度在离线混部技术</h2><p>（<a target="_blank" rel="noopener" href="https://developer.baidu.com/article/detail.html?id=294741">https://developer.baidu.com/article/detail.html?id=294741</a>)</p>
+<p>服务器资源利用率较低，TCO(IT 基础设施的总拥有成本) 逐年上涨，对于拥有大量机器资源的公司来说无疑是一个头疼的问题。混部技术就是在这种情况下应运而生，目前，混部技术在业界还属于比较小众的领域，只有一些资源量级较大的公司在研究、发展混部技术，以期获得收益。</p>
+<p>对于百度而言，通过应用混部技术，主混部集群数十万台，提升 CPU 利用率到 40+%，累计节约了数十亿人民币。目前百度容器引擎产品 CCE 已支持在离线混部，并完成了大规模业务落地，本文将带大家深入了解百度的在离线混部技术。</p>
+<p>在线和离线业务如何划分？在百度内部，我们认为在线业务特点包括但不限于：运行时间长，延时敏感，对稳定向要求较高，服务不稳定业务会立马感知并且带来损失，有明显的波峰波谷，白天高，深夜低，比如广告搜索业务；而离线业务的特点包括但不限于非延时敏感，可重试，运行时间一般较短在几十分钟左右，内部一般为大数据计算，机器学习等服务。<br>在线业务以搜索为例，白天用户工作学习时查询量会非常大，但是当大部分用户夜间休息时，查询量相对白天就会变得非常小，此时我们就可以引入离线业务。离线业务没有严格的时间要求，随时都能跑，用户关心的是任务能不能跑完，对于什么时候跑完并没有太大的需求，同时如果单机上资源有冲突，此时我们会压制离线业务，甚至会驱逐离线业务，这对用户是无感的，计算平台重新拉起任务，继续计算。<br>因此，在线型业务和离线业务具备资源互补的特点，从时间上和对资源的容忍度上可以完美的结合到一起。一方面，在线业务的优先级更高，单机和调度层面会优先保障在线的资源，可能会对离线进行压制和驱逐，另一方面，对于离线任务来说，压制和驱逐对用户是无感的，只需要保证任务顺利完成，有很高的容忍度。<br><strong>简单来说，将在线业务和离线任务混合混部到相同物理资源上，通过资源隔离、调度等控制手段 , 充分使用资源，同时保证服务的稳定性，我们称这样的技术为“混部”。</strong></p>
+<p>针对 Kubernetes 无法根据资源使用量分配资源，我们引入了动态资源视图。<br>在混部调度中，在线和离线使用相同的物理资源，在线看到的资源视图和离线看到的资源视图相互独立。在线业务看到的可用资源依旧为整机资源进行静态分配，离线看到的可用资源为整机资源减去在线作业已经使用的资源。</p>
+<p><strong>资源类型：</strong></p>
+<ol>
+<li>可压缩资源：CPU、IO带宽、网络带宽</li>
+<li>不可压缩资源：内存、磁盘容量</li>
+</ol>
+<p><strong>资源隔离：</strong></p>
+<p>由于在离线混部是将在线业务和离线任务混合混部到相同物理资源上，所以在离线业务由于流量激增，出现资源争抢时，如何保证在线的 SLA 不受影响，并且在保证在线服务的 SLA 时，也要保证离线任务的整体质量，保证离线作业的成功率和耗时。</p>
+<ul>
+<li><p>cpuset编排：绑定核心，且numa感知</p>
+</li>
+<li><p>离线调度器：是一种离线任务专用的 CPU 调度算法，从调度器上分开，在线调度器看不到离线任务。在线调度器先于离线调度器进行任务调度，存在在线任务时，离线得不到调度。所以对于在线任务来说，可以达到混部前相近的 CPU 质量。</p>
+</li>
+<li><p><strong>page cache要不要主动回收的解释：</strong>看要内存密集型还是读IO密集型。1）容器的 page cache 得不到回收，它依赖于容器管理 page cache 的机制是需要才去回收的方式，即没有后台回收，每次都是分配时候发现到达 limit 了，在 alloc 的时候出发回收，如果业务压力较大，分配的速度大于回收的速度，就可能出现 OOM 的问题。2）cache 回收时并不会区分在线离线业务，会导致在线业务的 cache 可能会被先于离线 cache 回收掉，如果在线有大量的读 cache 行为，会造成 cache 命中降低，直接进行读盘操作，会导致在线业务的性能下降，甚至会导致 IO 夯住。</p>
+</li>
+<li><p>内存背景回收：异步回收 cache，根据在线离线的 QOS 不同，设置不同的背景回收水位，优先回收离线业务的 cache。</p>
+</li>
+<li><p>基于ebpf的定制隔离策略：现有的内核隔离策略都是基于 QOS，创建容器时进行 cgroup 配置，由内核进行统一的资源管理，但是某些高敏业务在最高优先级的 QOS 下也无法保证其特定资源，或者需要某一纬度的资源需要高优保证，此时通用隔离策略无法满足。</p>
+</li>
+<li><p>单机资源管理：在混部时，离线可以占用多少资源一直是一个问题。机型不同，在线服务的敏感度不同，离线业务占用的资源多少对在线造成的影响也不尽相同，针对这种情况，我们对集群纬度，池 (具有相同特性的一批机器) 纬度，节点纬度对离线可用资源上限做了限制，其中粒度最小优先级最高。</p>
+</li>
+</ul>
+<img src="/2022/04/28/%E8%B5%84%E6%BA%90%E6%B7%B7%E9%83%A8%E7%A0%94%E7%A9%B6%E7%BA%AA%E8%A6%81/developer_ed5f664.png" class="" title="This is an image">
+<p><img src="%E8%B5%84%E6%BA%90%E6%B7%B7%E9%83%A8%E7%A0%94%E7%A9%B6%E7%BA%AA%E8%A6%81/developer_ed5f664.png" alt="img"></p>
+<p><strong>高性能调度器：</strong>在线和离线业务的调度需求是不一样的，在线一般为常驻服务，不会频繁变更，对调度器要求较低。但是离线任务由于具有运行时间短 (几分钟到几小时)，任务多的特点，以 Kubernetes 默认调度器的调度性能不足以支撑离线任务的调度。所以我们开发了高性能的离线调度器，计算可以达到 5000 ops。为了防止调度速度过快，对 ETCD 和整个集群造成压力，我们限制了 binding 速度为 1500 ops。</p>
+<p><strong>资源画像</strong><br>单机资源隔离是针对已经调度到节点上的任务进行隔离，如果检测到离线任务对在线产生一定的影响后，会很快响应对离线任务进行压制和驱逐的操作。这样会影响离线任务的稳定性。针对这种场景，如果在调度时可以预测到节点上未来一段时间的在线使用量，可以针对性的调度离线任务。</p>
+<p>如何提供更稳定的超发资源，则取决于我们资源预测的准确度是什么样的。不仅离线调度需要资源画像，在线调度也需要资源画像，通过资源画像可以有效的避免热点产生。</p>
+<p>未来，从在离线混部，走向无差别混部。</p>
+<h2 id="一文看懂业界在离线混部技术"><a href="#一文看懂业界在离线混部技术" class="headerlink" title="一文看懂业界在离线混部技术"></a>一文看懂业界在离线混部技术</h2><p>(<a target="_blank" rel="noopener" href="https://www.infoq.cn/article/knqswz6qrggwmv6axwqu">https://www.infoq.cn/article/knqswz6qrggwmv6axwqu</a>)</p>
+<blockquote>
+<p>通过对目前业界在离线方案方案的分析，我们可以抽象出在离线混部方案的三个划分维度：</p>
+<ul>
+<li><p>从在离线混部的隔离类型上，可以分为独占内核和共享内核，主要取决于混部的服务内核是否独立。如果服务是混部于同一台物理机上，属于共享内核；如分属于不同物理机，则属于独占内核。</p>
+</li>
+<li><p>从在离线混部的部署底座上，可以分为物理机部署和容器部署。</p>
+</li>
+<li><p>从在离线混部的调度决策上，可以分为静态决策和动态决策。判断标准是调度决策所依赖的元素是否是运行过程中的实时指标。如是则属于动态决策，反之则属于静态决策。动态决策资源利用率更高，但是要做好突发状况时的资源保障。</p>
+</li>
+</ul>
+<p>这三个维度的组合，目前实际应用中主要是独占内核 + 物理机 + 静态决策、独占内核 + 容器 + 动态决策、共享内核 + 容器 + 动态决策这三种模式。</p>
+</blockquote>
+<h1 id="零碎的想法"><a href="#零碎的想法" class="headerlink" title="零碎的想法"></a>零碎的想法</h1><ol>
+<li>虽然paas是通过混部决策系统进行资源分配和调度，但是iaas层还是CPU超分的，那paas层哪怕不混部，是否CPI也会波动，干扰调度？</li>
+<li>采用混部技术的k8s集群的宿主机应该采用虚拟机，还是物理机？</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -509,7 +633,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-03-28 22:38:25" itemprop="dateModified" datetime="2022-03-28T22:38:25+08:00">2022-03-28</time>
+      <time title="Modified: 2022-05-04 15:44:03" itemprop="dateModified" datetime="2022-05-04T15:44:03+08:00">2022-05-04</time>
     </span>
 
   
@@ -522,7 +646,25 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="关键"><a href="#关键" class="headerlink" title="关键"></a>关键</h1><p>马尔科夫学习模型</p>
+          <h1 id="强化学习课件摘要"><a href="#强化学习课件摘要" class="headerlink" title="强化学习课件摘要"></a>强化学习课件摘要</h1><p><img src="%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20220503162704326.png" alt="image-20220503162704326"></p>
+<p><img src="%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20220503163509264.png" alt="image-20220503163509264"></p>
+<p><img src="%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20220503215814993.png" alt="image-20220503215814993"></p>
+<p><img src="%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20220503220625291.png" alt="image-20220503220625291"></p>
+<p><img src="%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20220503221729014.png" alt="image-20220503221729014"></p>
+<p><img src="%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20220503222245607.png" alt="image-20220503222245607"></p>
+<p><img src="%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20220503222946725.png" alt="image-20220503222946725"></p>
+<p><img src="%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20220504150213103.png" alt="image-20220504150213103"></p>
+<p><img src="%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20220504150628376.png" alt="image-20220504150628376"></p>
+<p><img src="%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20220504151916477.png" alt="image-20220504151916477"></p>
+<p><img src="%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20220504153149365.png" alt="image-20220504153149365"></p>
+<p><img src="%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/image-20220504154003753.png" alt="image-20220504154003753"></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li>强化学习入门MDP：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/25498081">https://zhuanlan.zhihu.com/p/25498081</a></li>
+<li>QLearning 示例：<a target="_blank" rel="noopener" href="http://mnemstudio.org/path-finding-q-learning-tutorial.htm">http://mnemstudio.org/path-finding-q-learning-tutorial.htm</a></li>
+<li>QLearning 知乎解释：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/26408259">https://www.zhihu.com/question/26408259</a></li>
+<li>DeepQLearning 论文：[<a target="_blank" rel="noopener" href="https://files.momodel.cn/Playing%20Atari%20with%20Deep%20Reinforcement%20Learning.pdf]">https://files.momodel.cn/Playing%20Atari%20with%20Deep%20Reinforcement%20Learning.pdf]</a>(<a target="_blank" rel="noopener" href="https://files.momodel.cn/Playing">https://files.momodel.cn/Playing</a> Atari with Deep Reinforcement Learning.pdf)</li>
+</ul>
+<h1 id="要点记录"><a href="#要点记录" class="headerlink" title="要点记录"></a>要点记录</h1><h2 id="马尔科夫过程"><a href="#马尔科夫过程" class="headerlink" title="马尔科夫过程"></a>马尔科夫过程</h2><h2 id="马尔可夫决策过程"><a href="#马尔可夫决策过程" class="headerlink" title="马尔可夫决策过程"></a>马尔可夫决策过程</h2><p>马尔科夫决策过程由元组<img src="https://www.zhihu.com/equation?tex=%5Cleft(S,A,P,R,%5Cgamma%5Cright)" alt="[公式]">描述，其中：<img src="https://www.zhihu.com/equation?tex=S" alt="[公式]">为有限的状态集, <img src="https://www.zhihu.com/equation?tex=A" alt="[公式]"> 为有限的动作集, <img src="https://www.zhihu.com/equation?tex=P" alt="[公式]"> 为状态转移概率, <img src="https://www.zhihu.com/equation?tex=R" alt="[公式]">为回报函数, <img src="https://www.zhihu.com/equation?tex=%5Cgamma+" alt="[公式]"> 为折扣因子，用来计算累积回报。注意，跟马尔科夫过程不同的是，马尔科夫决策过程的状态转移概率是包含动作的即：<img src="https://www.zhihu.com/equation?tex=P_%7Bss%27%7D%5E%7Ba%7D=P%5Cleft%5BS_%7Bt+1%7D=s%27%7CS_t=s,A_t=a%5Cright%5D" alt="[公式]"></p>
 
       
     </div>
@@ -953,87 +1095,6 @@
 
 <h2 id="open命令帮助"><a href="#open命令帮助" class="headerlink" title="open命令帮助"></a>open命令帮助</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#### open</span><br><span class="line">Usage: open [-e] [-t] [-f] [-W] [-R] [-n] [-g] [-h] [-s &lt;partial SDK name&gt;][-b &lt;bundle identifier&gt;] [-a &lt;application&gt;] [filenames] [--args arguments]</span><br><span class="line">Help: Open opens files from a shell.</span><br><span class="line">      By default, opens each file using the default application for that file.  </span><br><span class="line">      If the file is in the form of a URL, the file will be opened as a URL.</span><br><span class="line">Options: </span><br><span class="line">      -a                Opens with the specified application.</span><br><span class="line">      -b                Opens with the specified application bundle identifier.</span><br><span class="line">      -e                Opens with TextEdit.</span><br><span class="line">      -t                Opens with default text editor.</span><br><span class="line">      -f                Reads input from standard input and opens with TextEdit.</span><br><span class="line">      -F  --fresh       Launches the app fresh, that is, without restoring windows. Saved persistent state is lost, excluding Untitled documents.</span><br><span class="line">      -R, --reveal      Selects in the Finder instead of opening.</span><br><span class="line">      -W, --wait-apps   Blocks until the used applications are closed (even if they were already running).</span><br><span class="line">          --args        All remaining arguments are passed in argv to the application&#x27;s main() function instead of opened.</span><br><span class="line">      -n, --new         Open a new instance of the application even if one is already running.</span><br><span class="line">      -j, --hide        Launches the app hidden.</span><br><span class="line">      -g, --background  Does not bring the application to the foreground.</span><br><span class="line">      -h, --header      Searches header file locations for headers matching the given filenames, and opens them.</span><br><span class="line">      -s                For -h, the SDK to use; if supplied, only SDKs whose names contain the argument value are searched.</span><br><span class="line">                        Otherwise the highest versioned SDK in each platform is used.</span><br></pre></td></tr></table></figure>
 
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://sandszy.github.io/2022/03/11/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="sandszy">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="All things are dificult before they are easy.">
-      <meta itemprop="description" content="">
-    </span>
-    
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | All things are dificult before they are easy.">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/11/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-03-11 23:13:36" itemprop="dateCreated datePublished" datetime="2022-03-11T23:13:36+08:00">2022-03-11</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
       
     </div>
