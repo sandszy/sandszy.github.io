@@ -125,7 +125,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -164,6 +164,82 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://sandszy.github.io/2023/01/02/kubeadm%E6%90%AD%E5%BB%BA%E7%9A%84k8s%E9%9B%86%E7%BE%A4%E8%AF%81%E4%B9%A6%E8%BF%87%E6%9C%9F%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sandszy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="All things are dificult before they are easy.">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | All things are dificult before they are easy.">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/01/02/kubeadm%E6%90%AD%E5%BB%BA%E7%9A%84k8s%E9%9B%86%E7%BE%A4%E8%AF%81%E4%B9%A6%E8%BF%87%E6%9C%9F%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0/" class="post-title-link" itemprop="url">kubeadm搭建的k8s集群证书过期如何更新</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-01-02 21:30:09 / Modified: 22:16:23" itemprop="dateCreated datePublished" datetime="2023-01-02T21:30:09+08:00">2023-01-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ul>
+<li>参考文档：<a target="_blank" rel="noopener" href="https://kubernetes.io/zh-cn/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/">https://kubernetes.io/zh-cn/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/</a></li>
+</ul>
+<h1 id="检查证书是否过期"><a href="#检查证书是否过期" class="headerlink" title="检查证书是否过期"></a>检查证书是否过期</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubeadm certs check-expiration</span><br><span class="line"><span class="meta">#</span><span class="bash">运行后发现默认情况下除了CA证书是8年过期，其他包括etcd在内的所有证书均是1年过期，为已过期状态</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="手动更新证书"><a href="#手动更新证书" class="headerlink" title="手动更新证书"></a>手动更新证书</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">kubeadm certs renew</span><br><span class="line"><span class="meta">#</span><span class="bash">执行后需要重启apiserver etcd scheduler和controller-manager，但是使用如下参考文档中的做法未生效</span></span><br><span class="line"><span class="meta">#</span><span class="bash">要重启静态 Pod 你可以临时将清单文件从 /etc/kubernetes/manifests/ 移除并等待 20 秒 （参考 KubeletConfiguration 结构 中的fileCheckFrequency 值）。</span> </span><br><span class="line"><span class="meta">#</span><span class="bash">所以通过docker restart命令重启如上4个容器</span></span><br><span class="line">docker restart &lt;容器id&gt;</span><br><span class="line"><span class="meta">#</span><span class="bash">如上命令执行完成后集群恢复正常</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1003,106 +1079,6 @@
 <p>仔细看这些公众号基本上都逃不出这3个要点。</p>
 <p>比如最难的就是无条件的爱，我们潜移默化的通常会用威胁，或者交换的方式去让孩子做一件事情，比如你如果学xx就带你出去玩，这样其实已经把学习放在了一个无趣的位置。这就是有条件的爱。</p>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://sandszy.github.io/2022/03/14/hadoop%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="sandszy">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="All things are dificult before they are easy.">
-      <meta itemprop="description" content="">
-    </span>
-    
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | All things are dificult before they are easy.">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/14/hadoop%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/" class="post-title-link" itemprop="url">hadoop相关概念</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-03-14 20:58:46" itemprop="dateCreated datePublished" datetime="2022-03-14T20:58:46+08:00">2022-03-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-03-28 22:38:25" itemprop="dateModified" datetime="2022-03-28T22:38:25+08:00">2022-03-28</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><strong>Hadoop</strong>：是一个分布式计算的开源框架</p>
-<p><strong>HDFS：</strong>是Hadoop的三大核心组件之一</p>
-<p><strong>Hive：</strong>用户处理存储在HDFS中的数据，hive的意义就是把好写的hive的sql转换为复杂难写的map-reduce程序。</p>
-<p><strong>Hbase：</strong>是一款基于HDFS的数据库，是一种NoSQL数据库，主要适用于海量明细数据（十亿、百亿）的随机实时查询，如日志明细、交易清单、轨迹行为等。</p>
-<h2 id="Hive与HBase的区别与联系"><a href="#Hive与HBase的区别与联系" class="headerlink" title="Hive与HBase的区别与联系"></a><strong>Hive与HBase的区别与联系</strong></h2><h3 id="区别："><a href="#区别：" class="headerlink" title="区别："></a><strong>区别：</strong></h3><p>Hive：Hive是基于Hadoop的一个<strong>数据仓库工具</strong>，可以将结构化的数据文件映射为一张数据库表，并提供简单的sql查询功能。</p>
-<ul>
-<li><strong>Hive本身不存储和计算数据，它完全依赖于HDFS和MapReduce，Hive中的表纯逻辑。****hive需要用到hdfs存储文件，需要用到MapReduce计算框架。</strong></li>
-<li><strong>hive可以认为是map-reduce的一个包装。hive的意义就是把好写的hive的sql转换为复杂难写的map-reduce程序。</strong></li>
-</ul>
-<p>HBase：HBase是Hadoop的<strong>数据库</strong>，一个分布式、可扩展、大数据的存储。</p>
-<ul>
-<li><strong>hbase是物理表，不是逻辑表，提供一个超大的内存hash表，搜索引擎通过它来存储索引，方便查询操作</strong></li>
-<li><strong>hbase可以认为是hdfs的一个包装。他的本质是数据存储，是个NoSql数据库；hbase部署于hdfs之上，并且克服了hdfs在随机读写方面的缺点。</strong></li>
-</ul>
-<h3 id="联系："><a href="#联系：" class="headerlink" title="联系："></a><strong>联系：</strong></h3><blockquote>
-<p><strong>Hbase和Hive在大数据架构中处在不同位置，Hbase主要解决实时数据查询问题，Hive主要解决数据处理和计算问题，一般是配合使用。</strong></p>
-</blockquote>
-<p>在大数据架构中，Hive和HBase是协作关系，数据流一般如下图：</p>
-<ol>
-<li>通过ETL工具将数据源抽取到HDFS存储；</li>
-<li>通过Hive清洗、处理和计算原始数据；</li>
-<li>HIve清洗处理后的结果，如果是面向海量数据随机查询场景的可存入Hbase</li>
-<li>数据应用从HBase查询数据；</li>
-</ol>
-<p><img src="1.png" alt="1"></p>
-<img src="/2022/03/14/hadoop%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/1.png" class="" title="This is an image">
       
     </div>
 

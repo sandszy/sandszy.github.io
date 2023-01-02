@@ -21,29 +21,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"sandszy.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="七牛云存储配置 免费领取七牛云的云对象存储kodo：https:&#x2F;&#x2F;marketing.qiniu.com&#x2F;activity&#x2F;act-free?entry&#x3D;www-kodo-txt-act 创建存储桶szy-bucket 个人中心-&gt;密钥管理获取ak&#x2F;sk  安装配置PicGo 下载安装介质：https:&#x2F;&#x2F;github.com&#x2F;Molunerfinn&#x2F;PicGo&#x2F;releases 配置七牛">
+    <meta name="description" content="参考文档：https:&#x2F;&#x2F;kubernetes.io&#x2F;zh-cn&#x2F;docs&#x2F;tasks&#x2F;administer-cluster&#x2F;kubeadm&#x2F;kubeadm-certs&#x2F;  检查证书是否过期12kubeadm certs check-expiration#运行后发现默认情况下除了CA证书是8年过期，其他包括etcd在内的所有证书均是1年过期，为已过期状态  手动更新证书123456kubeadm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="图床设置方法">
-<meta property="og:url" content="http://sandszy.github.io/2021/09/28/%E5%9B%BE%E5%BA%8A%E8%AE%BE%E7%BD%AE%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:title" content="kubeadm搭建的k8s集群证书过期如何更新">
+<meta property="og:url" content="http://sandszy.github.io/2023/01/02/kubeadm%E6%90%AD%E5%BB%BA%E7%9A%84k8s%E9%9B%86%E7%BE%A4%E8%AF%81%E4%B9%A6%E8%BF%87%E6%9C%9F%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0/index.html">
 <meta property="og:site_name" content="All things are dificult before they are easy.">
-<meta property="og:description" content="七牛云存储配置 免费领取七牛云的云对象存储kodo：https:&#x2F;&#x2F;marketing.qiniu.com&#x2F;activity&#x2F;act-free?entry&#x3D;www-kodo-txt-act 创建存储桶szy-bucket 个人中心-&gt;密钥管理获取ak&#x2F;sk  安装配置PicGo 下载安装介质：https:&#x2F;&#x2F;github.com&#x2F;Molunerfinn&#x2F;PicGo&#x2F;releases 配置七牛">
+<meta property="og:description" content="参考文档：https:&#x2F;&#x2F;kubernetes.io&#x2F;zh-cn&#x2F;docs&#x2F;tasks&#x2F;administer-cluster&#x2F;kubeadm&#x2F;kubeadm-certs&#x2F;  检查证书是否过期12kubeadm certs check-expiration#运行后发现默认情况下除了CA证书是8年过期，其他包括etcd在内的所有证书均是1年过期，为已过期状态  手动更新证书123456kubeadm">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://r073nnf72.hd-bkt.clouddn.com/image-20210930180154971.png">
-<meta property="article:published_time" content="2021-09-28T14:44:58.000Z">
-<meta property="article:modified_time" content="2022-03-11T15:13:36.279Z">
+<meta property="article:published_time" content="2023-01-02T13:30:09.000Z">
+<meta property="article:modified_time" content="2023-01-02T14:16:23.340Z">
 <meta property="article:author" content="sandszy">
+<meta property="article:tag" content="kubernetes">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://r073nnf72.hd-bkt.clouddn.com/image-20210930180154971.png">
 
 
-<link rel="canonical" href="http://sandszy.github.io/2021/09/28/%E5%9B%BE%E5%BA%8A%E8%AE%BE%E7%BD%AE%E6%96%B9%E6%B3%95/">
+<link rel="canonical" href="http://sandszy.github.io/2023/01/02/kubeadm%E6%90%AD%E5%BB%BA%E7%9A%84k8s%E9%9B%86%E7%BE%A4%E8%AF%81%E4%B9%A6%E8%BF%87%E6%9C%9F%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://sandszy.github.io/2021/09/28/%E5%9B%BE%E5%BA%8A%E8%AE%BE%E7%BD%AE%E6%96%B9%E6%B3%95/","path":"2021/09/28/图床设置方法/","title":"图床设置方法"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://sandszy.github.io/2023/01/02/kubeadm%E6%90%AD%E5%BB%BA%E7%9A%84k8s%E9%9B%86%E7%BE%A4%E8%AF%81%E4%B9%A6%E8%BF%87%E6%9C%9F%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0/","path":"2023/01/02/kubeadm搭建的k8s集群证书过期如何更新/","title":"kubeadm搭建的k8s集群证书过期如何更新"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>图床设置方法 | All things are dificult before they are easy.</title>
+<title>kubeadm搭建的k8s集群证书过期如何更新 | All things are dificult before they are easy.</title>
   
 
 
@@ -119,7 +118,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%83%E7%89%9B%E4%BA%91%E5%AD%98%E5%82%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">七牛云存储配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AEPicGo"><span class="nav-number">2.</span> <span class="nav-text">安装配置PicGo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEtypora"><span class="nav-number">3.</span> <span class="nav-text">配置typora</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%9F%9F%E5%90%8D"><span class="nav-number">4.</span> <span class="nav-text">配置域名</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%9F%E5%90%8D%E8%B4%AD%E4%B9%B0"><span class="nav-number">4.1.</span> <span class="nav-text">域名购买</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%9F%E5%90%8D%E5%A4%87%E6%A1%88"><span class="nav-number">4.2.</span> <span class="nav-text">域名备案</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E8%AF%81%E4%B9%A6%E6%98%AF%E5%90%A6%E8%BF%87%E6%9C%9F"><span class="nav-number">1.</span> <span class="nav-text">检查证书是否过期</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E6%9B%B4%E6%96%B0%E8%AF%81%E4%B9%A6"><span class="nav-number">2.</span> <span class="nav-text">手动更新证书</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -181,7 +180,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://sandszy.github.io/2021/09/28/%E5%9B%BE%E5%BA%8A%E8%AE%BE%E7%BD%AE%E6%96%B9%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="http://sandszy.github.io/2023/01/02/kubeadm%E6%90%AD%E5%BB%BA%E7%9A%84k8s%E9%9B%86%E7%BE%A4%E8%AF%81%E4%B9%A6%E8%BF%87%E6%9C%9F%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -194,12 +193,12 @@
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="图床设置方法 | All things are dificult before they are easy.">
+      <meta itemprop="name" content="kubeadm搭建的k8s集群证书过期如何更新 | All things are dificult before they are easy.">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          图床设置方法
+          kubeadm搭建的k8s集群证书过期如何更新
         </h1>
 
         <div class="post-meta-container">
@@ -209,15 +208,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2021-09-28 22:44:58" itemprop="dateCreated datePublished" datetime="2021-09-28T22:44:58+08:00">2021-09-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-03-11 23:13:36" itemprop="dateModified" datetime="2022-03-11T23:13:36+08:00">2022-03-11</time>
+      <time title="Created: 2023-01-02 21:30:09 / Modified: 22:16:23" itemprop="dateCreated datePublished" datetime="2023-01-02T21:30:09+08:00">2023-01-02</time>
     </span>
 
   
@@ -230,30 +223,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="七牛云存储配置"><a href="#七牛云存储配置" class="headerlink" title="七牛云存储配置"></a>七牛云存储配置</h1><ul>
-<li>免费领取七牛云的云对象存储kodo：<a target="_blank" rel="noopener" href="https://marketing.qiniu.com/activity/act-free?entry=www-kodo-txt-act">https://marketing.qiniu.com/activity/act-free?entry=www-kodo-txt-act</a></li>
-<li>创建存储桶szy-bucket</li>
-<li>个人中心-&gt;密钥管理获取ak/sk</li>
+        <ul>
+<li>参考文档：<a target="_blank" rel="noopener" href="https://kubernetes.io/zh-cn/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/">https://kubernetes.io/zh-cn/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/</a></li>
 </ul>
-<h1 id="安装配置PicGo"><a href="#安装配置PicGo" class="headerlink" title="安装配置PicGo"></a>安装配置PicGo</h1><ul>
-<li>下载安装介质：<a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/PicGo/releases">https://github.com/Molunerfinn/PicGo/releases</a></li>
-<li>配置七牛云图床配置</li>
-</ul>
-<p><img src="http://r073nnf72.hd-bkt.clouddn.com/image-20210930180154971.png" alt="image-20210930180154971"></p>
-<ul>
-<li>选择PicGo配置，打开配置文件，复制配置</li>
-</ul>
-<h1 id="配置typora"><a href="#配置typora" class="headerlink" title="配置typora"></a>配置typora</h1><ul>
-<li>File-&gt;Perferences，选择Image标签页</li>
-<li>When Insert选择Upload image</li>
-<li>Image Upload Setting选择PicGo-Core</li>
-<li>选择Open Config FIle，粘贴PicGo中复制的配置文件内容（这里去查看PicGo-Core的文档进行配置应该也是可以的</li>
-<li>到此，应该已经可以把自动上传七牛云，并且自动关联到md文档</li>
-</ul>
-<h1 id="配置域名"><a href="#配置域名" class="headerlink" title="配置域名"></a>配置域名</h1><p>由于七牛对象存储不提供域名，其域名为测试域名，有效期一个月，所以需要自习购买域名并进行关联</p>
-<h2 id="域名购买"><a href="#域名购买" class="headerlink" title="域名购买"></a>域名购买</h2><h2 id="域名备案"><a href="#域名备案" class="headerlink" title="域名备案"></a>域名备案</h2><ul>
-<li>阿里云购买和备案域名</li>
-</ul>
+<h1 id="检查证书是否过期"><a href="#检查证书是否过期" class="headerlink" title="检查证书是否过期"></a>检查证书是否过期</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubeadm certs check-expiration</span><br><span class="line"><span class="meta">#</span><span class="bash">运行后发现默认情况下除了CA证书是8年过期，其他包括etcd在内的所有证书均是1年过期，为已过期状态</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="手动更新证书"><a href="#手动更新证书" class="headerlink" title="手动更新证书"></a>手动更新证书</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">kubeadm certs renew</span><br><span class="line"><span class="meta">#</span><span class="bash">执行后需要重启apiserver etcd scheduler和controller-manager，但是使用如下参考文档中的做法未生效</span></span><br><span class="line"><span class="meta">#</span><span class="bash">要重启静态 Pod 你可以临时将清单文件从 /etc/kubernetes/manifests/ 移除并等待 20 秒 （参考 KubeletConfiguration 结构 中的fileCheckFrequency 值）。</span> </span><br><span class="line"><span class="meta">#</span><span class="bash">所以通过docker restart命令重启如上4个容器</span></span><br><span class="line">docker restart &lt;容器id&gt;</span><br><span class="line"><span class="meta">#</span><span class="bash">如上命令执行完成后集群恢复正常</span></span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -262,19 +238,19 @@
     
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/k8s/" rel="tag"># kubernetes</a>
+          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/09/25/%E5%9C%A8%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84linux%E7%B3%BB%E7%BB%9F%E4%B8%8B%E6%90%AD%E5%BB%BAhexo%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" rel="prev" title="在一个新的linux系统下搭建hexo开发环境">
-                  <i class="fa fa-chevron-left"></i> 在一个新的linux系统下搭建hexo开发环境
+                <a href="/2022/06/01/gocrane-crane%E7%A0%94%E7%A9%B6/" rel="prev" title="gocrane/crane研究">
+                  <i class="fa fa-chevron-left"></i> gocrane/crane研究
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/01/26/hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%92%8C%E9%AA%8C%E8%AF%81%E8%AE%B0%E5%BD%95/" rel="next" title="hadoop环境搭建和验证记录">
-                  hadoop环境搭建和验证记录 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>

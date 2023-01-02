@@ -125,7 +125,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -164,6 +164,106 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://sandszy.github.io/2022/03/14/hadoop%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sandszy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="All things are dificult before they are easy.">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | All things are dificult before they are easy.">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/14/hadoop%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/" class="post-title-link" itemprop="url">hadoop相关概念</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-14 20:58:46" itemprop="dateCreated datePublished" datetime="2022-03-14T20:58:46+08:00">2022-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-03-28 22:38:25" itemprop="dateModified" datetime="2022-03-28T22:38:25+08:00">2022-03-28</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><strong>Hadoop</strong>：是一个分布式计算的开源框架</p>
+<p><strong>HDFS：</strong>是Hadoop的三大核心组件之一</p>
+<p><strong>Hive：</strong>用户处理存储在HDFS中的数据，hive的意义就是把好写的hive的sql转换为复杂难写的map-reduce程序。</p>
+<p><strong>Hbase：</strong>是一款基于HDFS的数据库，是一种NoSQL数据库，主要适用于海量明细数据（十亿、百亿）的随机实时查询，如日志明细、交易清单、轨迹行为等。</p>
+<h2 id="Hive与HBase的区别与联系"><a href="#Hive与HBase的区别与联系" class="headerlink" title="Hive与HBase的区别与联系"></a><strong>Hive与HBase的区别与联系</strong></h2><h3 id="区别："><a href="#区别：" class="headerlink" title="区别："></a><strong>区别：</strong></h3><p>Hive：Hive是基于Hadoop的一个<strong>数据仓库工具</strong>，可以将结构化的数据文件映射为一张数据库表，并提供简单的sql查询功能。</p>
+<ul>
+<li><strong>Hive本身不存储和计算数据，它完全依赖于HDFS和MapReduce，Hive中的表纯逻辑。****hive需要用到hdfs存储文件，需要用到MapReduce计算框架。</strong></li>
+<li><strong>hive可以认为是map-reduce的一个包装。hive的意义就是把好写的hive的sql转换为复杂难写的map-reduce程序。</strong></li>
+</ul>
+<p>HBase：HBase是Hadoop的<strong>数据库</strong>，一个分布式、可扩展、大数据的存储。</p>
+<ul>
+<li><strong>hbase是物理表，不是逻辑表，提供一个超大的内存hash表，搜索引擎通过它来存储索引，方便查询操作</strong></li>
+<li><strong>hbase可以认为是hdfs的一个包装。他的本质是数据存储，是个NoSql数据库；hbase部署于hdfs之上，并且克服了hdfs在随机读写方面的缺点。</strong></li>
+</ul>
+<h3 id="联系："><a href="#联系：" class="headerlink" title="联系："></a><strong>联系：</strong></h3><blockquote>
+<p><strong>Hbase和Hive在大数据架构中处在不同位置，Hbase主要解决实时数据查询问题，Hive主要解决数据处理和计算问题，一般是配合使用。</strong></p>
+</blockquote>
+<p>在大数据架构中，Hive和HBase是协作关系，数据流一般如下图：</p>
+<ol>
+<li>通过ETL工具将数据源抽取到HDFS存储；</li>
+<li>通过Hive清洗、处理和计算原始数据；</li>
+<li>HIve清洗处理后的结果，如果是面向海量数据随机查询场景的可存入Hbase</li>
+<li>数据应用从HBase查询数据；</li>
+</ol>
+<p><img src="1.png" alt="1"></p>
+<img src="/2022/03/14/hadoop%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/1.png" class="" title="This is an image">
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
