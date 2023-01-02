@@ -125,7 +125,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -164,6 +164,101 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://sandszy.github.io/2022/06/01/gocrane-crane%E7%A0%94%E7%A9%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sandszy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="All things are dificult before they are easy.">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | All things are dificult before they are easy.">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/01/gocrane-crane%E7%A0%94%E7%A9%B6/" class="post-title-link" itemprop="url">gocrane/crane研究</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-06-01 22:26:09" itemprop="dateCreated datePublished" datetime="2022-06-01T22:26:09+08:00">2022-06-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-06-05 21:59:36" itemprop="dateModified" datetime="2022-06-05T21:59:36+08:00">2022-06-05</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="安装方法"><a href="#安装方法" class="headerlink" title="安装方法"></a>安装方法</h1><p><a target="_blank" rel="noopener" href="https://docs.gocrane.io/dev/zh/installation/#crane-url">https://docs.gocrane.io/dev/zh/installation/#crane-url</a></p>
+<h1 id="安装grafana后获取登录地址"><a href="#安装grafana后获取登录地址" class="headerlink" title="安装grafana后获取登录地址"></a>安装grafana后获取登录地址</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">NOTES:</span><br><span class="line">1. Get your &#x27;admin&#x27; user password by running:</span><br><span class="line"></span><br><span class="line">   kubectl get secret --namespace crane-system grafana -o jsonpath=&quot;&#123;.data.admin-password&#125;&quot; | base64 --decode ; echo</span><br><span class="line"></span><br><span class="line">2. The Grafana server can be accessed via port 8082 on the following DNS name from within your cluster:</span><br><span class="line"></span><br><span class="line">   grafana.crane-system.svc.cluster.local</span><br><span class="line"></span><br><span class="line">   Get the Grafana URL to visit by running these commands in the same shell:</span><br><span class="line"></span><br><span class="line">     export POD_NAME=$(kubectl get pods --namespace crane-system -l &quot;app.kubernetes.io/name=grafana,app.kubernetes.io/instance=grafana&quot; -o jsonpath=&quot;&#123;.items[0].metadata.name&#125;&quot;)</span><br><span class="line">     kubectl --namespace crane-system port-forward $POD_NAME 3000</span><br><span class="line"></span><br><span class="line">3. Login with the password from step 1 and the username: admin</span><br><span class="line">#################################################################################</span><br><span class="line">######   WARNING: Persistence is disabled!!! You will lose your data when   #####</span><br><span class="line">######            the Grafana pod is terminated.                            #####</span><br><span class="line">#################################################################################</span><br></pre></td></tr></table></figure>
+
+<h1 id="资源推荐使用"><a href="#资源推荐使用" class="headerlink" title="资源推荐使用"></a>资源推荐使用</h1><ol>
+<li>创建Analytics对象</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">analysis.crane.io/v1alpha1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Analytics</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">wordpress-resource</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">Resource</span>                        <span class="comment"># This can only be &quot;Resource&quot; or &quot;HPA&quot;.</span></span><br><span class="line">  <span class="attr">completionStrategy:</span></span><br><span class="line">    <span class="attr">completionStrategyType:</span> <span class="string">Periodical</span>  <span class="comment"># This can only be &quot;Once&quot; or &quot;Periodical&quot;.</span></span><br><span class="line">    <span class="attr">periodSeconds:</span> <span class="number">86400</span>                <span class="comment"># analytics selected resources every 1 day</span></span><br><span class="line">  <span class="attr">resourceSelectors:</span>                    <span class="comment"># defines all the resources to be select with</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line">      <span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">happy-panda-wordpress</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>查看Analytics对象的status部分，找到对应的recommend对象</li>
+</ol>
+<p>kubectl get Analytics wordpress-resource -o yaml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">analysis.crane.io/v1alpha1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Analytics</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">annotations:</span></span><br><span class="line">    <span class="attr">kubectl.kubernetes.io/last-applied-configuration:</span> <span class="string">|</span></span><br><span class="line"><span class="string">      &#123;&quot;apiVersion&quot;:&quot;analysis.crane.io/v1alpha1&quot;,&quot;kind&quot;:&quot;Analytics&quot;,&quot;metadata&quot;:&#123;&quot;annotations&quot;:&#123;&#125;,&quot;name&quot;:&quot;wordpress-resource&quot;,&quot;namespace&quot;:&quot;default&quot;&#125;,&quot;spec&quot;:&#123;&quot;completionStrategy&quot;:&#123;&quot;completionStrategyType&quot;:&quot;Periodical&quot;,&quot;periodSeconds&quot;:86400&#125;,&quot;resourceSelectors&quot;:[&#123;&quot;apiVersion&quot;:&quot;apps/v1&quot;,&quot;kind&quot;:&quot;Deployment&quot;,&quot;name&quot;:&quot;happy-panda-wordpress&quot;&#125;],&quot;type&quot;:&quot;Resource&quot;&#125;&#125;</span></span><br><span class="line"><span class="string"></span>  <span class="attr">creationTimestamp:</span> <span class="string">&quot;2022-06-05T13:40:23Z&quot;</span></span><br><span class="line">  <span class="attr">generation:</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">wordpress-resource</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line">  <span class="attr">resourceVersion:</span> <span class="string">&quot;2849474&quot;</span></span><br><span class="line">  <span class="attr">uid:</span> <span class="number">19225211</span><span class="number">-0805</span><span class="number">-4116</span><span class="string">-96b6-79cc801e0cc0</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">completionStrategy:</span></span><br><span class="line">    <span class="attr">completionStrategyType:</span> <span class="string">Periodical</span></span><br><span class="line">    <span class="attr">periodSeconds:</span> <span class="number">86400</span></span><br><span class="line">  <span class="attr">resourceSelectors:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line">    <span class="attr">labelSelector:</span> &#123;&#125;</span><br><span class="line">    <span class="attr">name:</span> <span class="string">happy-panda-wordpress</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">Resource</span></span><br><span class="line"><span class="attr">status:</span></span><br><span class="line">  <span class="attr">conditions:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">lastTransitionTime:</span> <span class="string">&quot;2022-06-05T13:40:23Z&quot;</span></span><br><span class="line">    <span class="attr">message:</span> <span class="string">Analytics</span> <span class="string">is</span> <span class="string">ready</span></span><br><span class="line">    <span class="attr">reason:</span> <span class="string">AnalyticsReady</span></span><br><span class="line">    <span class="attr">status:</span> <span class="string">&quot;True&quot;</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">Ready</span></span><br><span class="line">  <span class="attr">lastUpdateTime:</span> <span class="string">&quot;2022-06-05T13:40:23Z&quot;</span></span><br><span class="line">  <span class="attr">recommendations:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">wordpress-resource-resource-dkk5t</span></span><br><span class="line">    <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line">    <span class="attr">targetRef:</span></span><br><span class="line">      <span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line">      <span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">happy-panda-wordpress</span></span><br><span class="line">      <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line">    <span class="attr">uid:</span> <span class="string">23f5b701-031b-440c-a646-e7aa818b4bfe</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>查看recommend对象的targetRef即为系统推荐的CPU和内存建议</li>
+</ol>
+<p>kubectl get recommend wordpress-resource-resource-dkk5t -o yaml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">analysis.crane.io/v1alpha1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Recommendation</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">creationTimestamp:</span> <span class="string">&quot;2022-06-05T13:40:23Z&quot;</span></span><br><span class="line">  <span class="attr">generateName:</span> <span class="string">wordpress-resource-resource-</span></span><br><span class="line">  <span class="attr">generation:</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app.kubernetes.io/instance:</span> <span class="string">happy-panda</span></span><br><span class="line">    <span class="attr">app.kubernetes.io/managed-by:</span> <span class="string">Helm</span></span><br><span class="line">    <span class="attr">app.kubernetes.io/name:</span> <span class="string">wordpress</span></span><br><span class="line">    <span class="attr">helm.sh/chart:</span> <span class="string">wordpress-11.1.2</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">wordpress-resource-resource-dkk5t</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line">  <span class="attr">ownerReferences:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">apiVersion:</span> <span class="string">analysis.crane.io/v1alpha1</span></span><br><span class="line">    <span class="attr">blockOwnerDeletion:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">controller:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">Analytics</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">wordpress-resource</span></span><br><span class="line">    <span class="attr">uid:</span> <span class="number">19225211</span><span class="number">-0805</span><span class="number">-4116</span><span class="string">-96b6-79cc801e0cc0</span></span><br><span class="line">  <span class="attr">resourceVersion:</span> <span class="string">&quot;2849476&quot;</span></span><br><span class="line">  <span class="attr">uid:</span> <span class="string">23f5b701-031b-440c-a646-e7aa818b4bfe</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">adoptionType:</span> <span class="string">StatusAndAnnotation</span></span><br><span class="line">  <span class="attr">completionStrategy:</span></span><br><span class="line">    <span class="attr">completionStrategyType:</span> <span class="string">Periodical</span></span><br><span class="line">    <span class="attr">periodSeconds:</span> <span class="number">86400</span></span><br><span class="line">  <span class="attr">targetRef:</span></span><br><span class="line">    <span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line">    <span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">happy-panda-wordpress</span></span><br><span class="line">    <span class="attr">namespace:</span> <span class="string">default</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">Resource</span></span><br><span class="line"><span class="attr">status:</span></span><br><span class="line">  <span class="attr">conditions:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">lastTransitionTime:</span> <span class="string">&quot;2022-06-05T13:40:23Z&quot;</span></span><br><span class="line">    <span class="attr">message:</span> <span class="string">Recommendation</span> <span class="string">is</span> <span class="string">ready</span></span><br><span class="line">    <span class="attr">reason:</span> <span class="string">RecommendationReady</span></span><br><span class="line">    <span class="attr">status:</span> <span class="string">&quot;True&quot;</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">Ready</span></span><br><span class="line">  <span class="attr">lastUpdateTime:</span> <span class="string">&quot;2022-06-05T13:40:23Z&quot;</span></span><br><span class="line">  <span class="attr">recommendedValue:</span> <span class="string">|</span></span><br><span class="line"><span class="string">    containers:</span></span><br><span class="line"><span class="string">    - containerName: wordpress</span></span><br><span class="line"><span class="string">      target:</span></span><br><span class="line"><span class="string">        cpu: 114m</span></span><br><span class="line"><span class="string">        memory: &quot;241172479&quot;</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1025,94 +1120,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://sandszy.github.io/2022/03/14/%E5%A6%82%E4%BD%95%E5%9C%A8mac%E7%9A%84%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%94%A8App%E6%89%93%E5%BC%80%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="sandszy">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="All things are dificult before they are easy.">
-      <meta itemprop="description" content="">
-    </span>
-    
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | All things are dificult before they are easy.">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/14/%E5%A6%82%E4%BD%95%E5%9C%A8mac%E7%9A%84%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%94%A8App%E6%89%93%E5%BC%80%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">如何在mac的终端环境下用App打开一个文件</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-03-14 20:29:40" itemprop="dateCreated datePublished" datetime="2022-03-14T20:29:40+08:00">2022-03-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-03-28 22:38:25" itemprop="dateModified" datetime="2022-03-28T22:38:25+08:00">2022-03-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/MAC-skills/" itemprop="url" rel="index"><span itemprop="name">MAC skills</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="直接上命令"><a href="#直接上命令" class="headerlink" title="直接上命令"></a>直接上命令</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">typora和vscode打开</span></span><br><span class="line">open -a typora source/_posts/如何在mac的终端环境下用App打开一个文件.md</span><br><span class="line">open -a &quot;visual studio code&quot; source/_posts/如何在mac的终端环境下用App打开一个文件.md</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">用finder打开所在目录</span></span><br><span class="line">open -R source/_posts/如何在mac的终端环境下用App打开一个文件.md</span><br></pre></td></tr></table></figure>
-
-<h2 id="open命令帮助"><a href="#open命令帮助" class="headerlink" title="open命令帮助"></a>open命令帮助</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#### open</span><br><span class="line">Usage: open [-e] [-t] [-f] [-W] [-R] [-n] [-g] [-h] [-s &lt;partial SDK name&gt;][-b &lt;bundle identifier&gt;] [-a &lt;application&gt;] [filenames] [--args arguments]</span><br><span class="line">Help: Open opens files from a shell.</span><br><span class="line">      By default, opens each file using the default application for that file.  </span><br><span class="line">      If the file is in the form of a URL, the file will be opened as a URL.</span><br><span class="line">Options: </span><br><span class="line">      -a                Opens with the specified application.</span><br><span class="line">      -b                Opens with the specified application bundle identifier.</span><br><span class="line">      -e                Opens with TextEdit.</span><br><span class="line">      -t                Opens with default text editor.</span><br><span class="line">      -f                Reads input from standard input and opens with TextEdit.</span><br><span class="line">      -F  --fresh       Launches the app fresh, that is, without restoring windows. Saved persistent state is lost, excluding Untitled documents.</span><br><span class="line">      -R, --reveal      Selects in the Finder instead of opening.</span><br><span class="line">      -W, --wait-apps   Blocks until the used applications are closed (even if they were already running).</span><br><span class="line">          --args        All remaining arguments are passed in argv to the application&#x27;s main() function instead of opened.</span><br><span class="line">      -n, --new         Open a new instance of the application even if one is already running.</span><br><span class="line">      -j, --hide        Launches the app hidden.</span><br><span class="line">      -g, --background  Does not bring the application to the foreground.</span><br><span class="line">      -h, --header      Searches header file locations for headers matching the given filenames, and opens them.</span><br><span class="line">      -s                For -h, the SDK to use; if supplied, only SDKs whose names contain the argument value are searched.</span><br><span class="line">                        Otherwise the highest versioned SDK in each platform is used.</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1126,7 +1133,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2023</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
