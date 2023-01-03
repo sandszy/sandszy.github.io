@@ -125,7 +125,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -164,6 +164,90 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://sandszy.github.io/2023/01/03/%E5%8D%95%E8%8A%82%E7%82%B9etcd%E5%9C%A8%E8%93%9D%E5%B1%8F%E5%90%8E%E6%95%B0%E6%8D%AE%E6%8D%9F%E5%9D%8F%E4%BF%AE%E5%A4%8D%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sandszy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="All things are dificult before they are easy.">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | All things are dificult before they are easy.">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/01/03/%E5%8D%95%E8%8A%82%E7%82%B9etcd%E5%9C%A8%E8%93%9D%E5%B1%8F%E5%90%8E%E6%95%B0%E6%8D%AE%E6%8D%9F%E5%9D%8F%E4%BF%AE%E5%A4%8D%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">单节点etcd在蓝屏后数据损坏修复记录</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-01-03 22:48:30 / Modified: 22:53:46" itemprop="dateCreated datePublished" datetime="2023-01-03T22:48:30+08:00">2023-01-03</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="报错信息"><a href="#报错信息" class="headerlink" title="报错信息"></a>报错信息</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"># docker logs 10022a842715 查看etcd容器启动日志</span><br><span class="line">[WARNING] Deprecated &#x27;--logger=capnslog&#x27; flag is set; use &#x27;--logger=zap&#x27; flag instead</span><br><span class="line">2023-01-02 13:36:53.186216 I | etcdmain: etcd Version: 3.4.13</span><br><span class="line">2023-01-02 13:36:53.186253 I | etcdmain: Git SHA: ae9734ed2</span><br><span class="line">2023-01-02 13:36:53.186256 I | etcdmain: Go Version: go1.12.17</span><br><span class="line">2023-01-02 13:36:53.186260 I | etcdmain: Go OS/Arch: linux/amd64</span><br><span class="line">2023-01-02 13:36:53.186264 I | etcdmain: setting maximum number of CPUs to 4, total number of available CPUs is 4</span><br><span class="line">2023-01-02 13:36:53.186325 N | etcdmain: the server is already initialized as member before, starting as etcd member...</span><br><span class="line">[WARNING] Deprecated &#x27;--logger=capnslog&#x27; flag is set; use &#x27;--logger=zap&#x27; flag instead</span><br><span class="line">2023-01-02 13:36:53.186360 I | embed: peerTLS: cert = /etc/kubernetes/pki/etcd/peer.crt, key = /etc/kubernetes/pki/etcd/peer.key, trusted-ca = /etc/kubernetes/pki/etcd/ca.crt, client-cert-auth = true, crl-file = </span><br><span class="line">2023-01-02 13:36:53.186725 I | embed: name = localhost.localdomain</span><br><span class="line">2023-01-02 13:36:53.186742 I | embed: data dir = /var/lib/etcd</span><br><span class="line">2023-01-02 13:36:53.186744 I | embed: member dir = /var/lib/etcd/member</span><br><span class="line">2023-01-02 13:36:53.186746 I | embed: heartbeat = 100ms</span><br><span class="line">2023-01-02 13:36:53.186748 I | embed: election = 1000ms</span><br><span class="line">2023-01-02 13:36:53.186749 I | embed: snapshot count = 10000</span><br><span class="line">2023-01-02 13:36:53.186752 I | embed: advertise client URLs = https://192.168.221.128:2379</span><br><span class="line">2023-01-02 13:36:53.186754 I | embed: initial advertise peer URLs = https://192.168.221.128:2380</span><br><span class="line">2023-01-02 13:36:53.186757 I | embed: initial cluster = </span><br><span class="line">2023-01-02 13:36:53.658826 I | etcdserver: recovered store from snapshot at index 3620377</span><br><span class="line">2023-01-02 13:36:53.681707 C | etcdserver: recovering backend from snapshot error: failed to find database snapshot file (snap: snapshot file doesn&#x27;t exist)</span><br><span class="line">panic: recovering backend from snapshot error: failed to find database snapshot file (snap: snapshot file doesn&#x27;t exist)</span><br><span class="line">	panic: runtime error: invalid memory address or nil pointer dereference</span><br><span class="line">[signal SIGSEGV: segmentation violation code=0x1 addr=0x20 pc=0xc0587e]</span><br><span class="line"></span><br><span class="line">goroutine 1 [running]:</span><br><span class="line">go.etcd.io/etcd/etcdserver.NewServer.func1(0xc0002d4e30, 0xc0002d2d80)</span><br><span class="line">	/tmp/etcd-release-3.4.13/etcd/release/etcd/etcdserver/server.go:334 +0x3e</span><br><span class="line">panic(0xee6840, 0xc00012c290)</span><br><span class="line">	/usr/local/go/src/runtime/panic.go:522 +0x1b5</span><br><span class="line">github.com/coreos/pkg/capnslog.(*PackageLogger).Panicf(0xc000123b80, 0x10c13b2, 0x2a, 0xc0002d2e50, 0x1, 0x1)</span><br><span class="line">	/home/ANT.AMAZON.COM/leegyuho/go/pkg/mod/github.com/coreos/pkg@v0.0.0-20160727233714-3ac0863d7acf/capnslog/pkg_logger.go:75 +0x135</span><br><span class="line">go.etcd.io/etcd/etcdserver.NewServer(0x7fff4837ce2f, 0x15, 0x0, 0x0, 0x0, 0x0, 0xc000242c00, 0x1, 0x1, 0xc000242d80, ...)</span><br><span class="line">	/tmp/etcd-release-3.4.13/etcd/release/etcd/etcdserver/server.go:464 +0x433c</span><br><span class="line">go.etcd.io/etcd/embed.StartEtcd(0xc000290000, 0xc0002a2000, 0x0, 0x0)</span><br><span class="line">	/tmp/etcd-release-3.4.13/etcd/release/etcd/embed/etcd.go:214 +0x988</span><br><span class="line">go.etcd.io/etcd/etcdmain.startEtcd(0xc000290000, 0x10963d6, 0x6, 0x1, 0xc0001e9140)</span><br><span class="line">	/tmp/etcd-release-3.4.13/etcd/release/etcd/etcdmain/etcd.go:302 +0x40</span><br><span class="line">go.etcd.io/etcd/etcdmain.startEtcdOrProxyV2()</span><br><span class="line">	/tmp/etcd-release-3.4.13/etcd/release/etcd/etcdmain/etcd.go:144 +0x2ef9</span><br><span class="line">go.etcd.io/etcd/etcdmain.Main()</span><br><span class="line">	/tmp/etcd-release-3.4.13/etcd/release/etcd/etcdmain/main.go:46 +0x38</span><br><span class="line">main.main()</span><br><span class="line">	/tmp/etcd-release-3.4.13/etcd/release/etcd/main.go:28 +0x20</span><br></pre></td></tr></table></figure>
+
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p>etcd社区有相同问题issue：<a target="_blank" rel="noopener" href="https://github.com/etcd-io/etcd/issues/11949%E3%80%82">https://github.com/etcd-io/etcd/issues/11949。</a></p>
+<h1 id="解决过程"><a href="#解决过程" class="headerlink" title="解决过程"></a>解决过程</h1><p>在issue的最后由**<a target="_blank" rel="noopener" href="https://github.com/MrMYHuang">MrMYHuang</a>**提出了相关workaround如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rm /var/lib/etcd/member/wal/*.wal</span><br></pre></td></tr></table></figure>
+
+<p>or</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rm /var/lib/etcd/member/snap/*.snap</span><br></pre></td></tr></table></figure>
+
+<p>经过实测，需要两者同时删除后重启etcd启动成功</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm /var/lib/etcd/member/wal/*.wal /var/lib/etcd/member/snap/*.snap</span><br></pre></td></tr></table></figure>
+
+<p>etdd启动成功日志如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">localhost:/var/lib/etcd/member/snap # docker logs 7d38d854b7ef</span><br><span class="line">[WARNING] Deprecated &#x27;--logger=capnslog&#x27; flag is set; use &#x27;--logger=zap&#x27; flag instead</span><br><span class="line">2023-01-03 14:41:56.781722 I | etcdmain: etcd Version: 3.4.13</span><br><span class="line">2023-01-03 14:41:56.781776 I | etcdmain: Git SHA: ae9734ed2</span><br><span class="line">2023-01-03 14:41:56.781778 I | etcdmain: Go Version: go1.12.17</span><br><span class="line">2023-01-03 14:41:56.781781 I | etcdmain: Go OS/Arch: linux/amd64</span><br><span class="line">2023-01-03 14:41:56.781783 I | etcdmain: setting maximum number of CPUs to 4, total number of available CPUs is 4</span><br><span class="line">2023-01-03 14:41:56.781853 N | etcdmain: the server is already initialized as member before, starting as etcd member...</span><br><span class="line">[WARNING] Deprecated &#x27;--logger=capnslog&#x27; flag is set; use &#x27;--logger=zap&#x27; flag instead</span><br><span class="line">2023-01-03 14:41:56.781875 I | embed: peerTLS: cert = /etc/kubernetes/pki/etcd/peer.crt, key = /etc/kubernetes/pki/etcd/peer.key, trusted-ca = /etc/kubernetes/pki/etcd/ca.crt, client-cert-auth = true, crl-file = </span><br><span class="line">2023-01-03 14:41:56.782345 I | embed: name = localhost.localdomain</span><br><span class="line">2023-01-03 14:41:56.782350 I | embed: data dir = /var/lib/etcd</span><br><span class="line">2023-01-03 14:41:56.782353 I | embed: member dir = /var/lib/etcd/member</span><br><span class="line">2023-01-03 14:41:56.782354 I | embed: heartbeat = 100ms</span><br><span class="line">2023-01-03 14:41:56.782356 I | embed: election = 1000ms</span><br><span class="line">2023-01-03 14:41:56.782357 I | embed: snapshot count = 10000</span><br><span class="line">2023-01-03 14:41:56.782364 I | embed: advertise client URLs = https://192.168.221.128:2379</span><br><span class="line">2023-01-03 14:41:56.782366 I | embed: initial advertise peer URLs = https://192.168.221.128:2380</span><br><span class="line">2023-01-03 14:41:56.782370 I | embed: initial cluster = </span><br><span class="line">2023-01-03 14:41:56.783998 I | etcdserver: restarting member 2906be03e76930a4 in cluster 106db65009dfc481 at commit index 4</span><br><span class="line">raft2023/01/03 14:41:56 INFO: 2906be03e76930a4 switched to configuration voters=()</span><br><span class="line">raft2023/01/03 14:41:56 INFO: 2906be03e76930a4 became follower at term 2</span><br><span class="line">raft2023/01/03 14:41:56 INFO: newRaft 2906be03e76930a4 [peers: [], term: 2, commit: 4, applied: 0, lastindex: 4, lastterm: 2]</span><br><span class="line">2023-01-03 14:41:56.785492 W | auth: simple token is not cryptographically signed</span><br><span class="line">2023-01-03 14:41:56.788104 I | etcdserver: starting server... [version: 3.4.13, cluster version: to_be_decided]</span><br><span class="line">2023-01-03 14:41:56.790247 I | embed: ClientTLS: cert = /etc/kubernetes/pki/etcd/server.crt, key = /etc/kubernetes/pki/etcd/server.key, trusted-ca = /etc/kubernetes/pki/etcd/ca.crt, client-cert-auth = true, crl-file = </span><br><span class="line">2023-01-03 14:41:56.790407 I | embed: listening for metrics on http://127.0.0.1:2381</span><br><span class="line">2023-01-03 14:41:56.790437 I | embed: listening for peers on 192.168.221.128:2380</span><br><span class="line">raft2023/01/03 14:41:56 INFO: 2906be03e76930a4 switched to configuration voters=(2956259129391919268)</span><br><span class="line">2023-01-03 14:41:56.790634 I | etcdserver/membership: added member 2906be03e76930a4 [https://192.168.221.128:2380] to cluster 106db65009dfc481</span><br><span class="line">2023-01-03 14:41:56.790718 N | etcdserver/membership: set the initial cluster version to 3.4</span><br><span class="line">2023-01-03 14:41:56.790748 I | etcdserver/api: enabled capabilities for version 3.4</span><br><span class="line">raft2023/01/03 14:41:58 INFO: 2906be03e76930a4 is starting a new election at term 2</span><br><span class="line">raft2023/01/03 14:41:58 INFO: 2906be03e76930a4 became candidate at term 3</span><br><span class="line">raft2023/01/03 14:41:58 INFO: 2906be03e76930a4 received MsgVoteResp from 2906be03e76930a4 at term 3</span><br><span class="line">raft2023/01/03 14:41:58 INFO: 2906be03e76930a4 became leader at term 3</span><br><span class="line">raft2023/01/03 14:41:58 INFO: raft.node: 2906be03e76930a4 elected leader 2906be03e76930a4 at term 3</span><br><span class="line">2023-01-03 14:41:58.286120 I | etcdserver: published &#123;Name:localhost.localdomain ClientURLs:[https://192.168.221.128:2379]&#125; to cluster 106db65009dfc481</span><br><span class="line">2023-01-03 14:41:58.286163 I | embed: ready to serve client requests</span><br><span class="line">2023-01-03 14:41:58.286221 I | embed: ready to serve client requests</span><br><span class="line">2023-01-03 14:41:58.287902 I | embed: serving client requests on 127.0.0.1:2379</span><br><span class="line">2023-01-03 14:41:58.288457 I | embed: serving client requests on 192.168.221.128:2379</span><br><span class="line">2023-01-03 14:42:07.501668 I | etcdserver/api/etcdhttp: /health OK (status code 200)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -999,85 +1083,6 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export SYSTEM_VERSION_COMPAT=1</span><br><span class="line"><span class="meta">#</span><span class="bash">再输入以下命令，打开应用：</span></span><br><span class="line">open -a &quot;Parallels Desktop&quot;</span><br></pre></td></tr></table></figure>
 
 <p>作者：hal<br>链接：<a target="_blank" rel="noopener" href="https://ld246.com/article/1606492419224">https://ld246.com/article/1606492419224</a><br>来源：链滴<br>协议：CC BY-SA 4.0 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">https://creativecommons.org/licenses/by-sa/4.0/</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://sandszy.github.io/2022/03/17/%E4%B8%89%E4%B8%AA%E6%94%AF%E6%9F%B1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="sandszy">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="All things are dificult before they are easy.">
-      <meta itemprop="description" content="">
-    </span>
-    
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | All things are dificult before they are easy.">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/17/%E4%B8%89%E4%B8%AA%E6%94%AF%E6%9F%B1/" class="post-title-link" itemprop="url">三个支柱</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-03-17 13:00:56" itemprop="dateCreated datePublished" datetime="2022-03-17T13:00:56+08:00">2022-03-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-03-28 22:38:25" itemprop="dateModified" datetime="2022-03-28T22:38:25+08:00">2022-03-28</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>樊登认为，孩子是个复杂的个体，不是个简单形式系统（哪怕是航天飞机也属于简单系统，因为系统工作的前因后果都可解释），不能靠机器指令培养，越复杂的系统越要通过简单的核心要点去培养。</p>
-<p>他看过各种相关书后总结的3个支柱是，1.无条件的爱；2.价值感；3.成长型心态。</p>
-<p>仔细看这些公众号基本上都逃不出这3个要点。</p>
-<p>比如最难的就是无条件的爱，我们潜移默化的通常会用威胁，或者交换的方式去让孩子做一件事情，比如你如果学xx就带你出去玩，这样其实已经把学习放在了一个无趣的位置。这就是有条件的爱。</p>
 
       
     </div>
