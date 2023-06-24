@@ -201,9 +201,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-06-23 23:25:09 / Modified: 23:25:43" itemprop="dateCreated datePublished" datetime="2023-06-23T23:25:09+08:00">2023-06-23</time>
+      <time title="Created: 2023-06-23 23:25:09" itemprop="dateCreated datePublished" datetime="2023-06-23T23:25:09+08:00">2023-06-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-06-24 08:36:04" itemprop="dateModified" datetime="2023-06-24T08:36:04+08:00">2023-06-24</time>
     </span>
 
   
@@ -240,6 +246,10 @@
 </li>
 <li><p>From a working control plane node in the cluster that has <code>/etc/kubernetes/pki/ca.key</code> execute <code>kubeadm kubeconfig user --org system:nodes --client-name system:node:$NODE &gt; kubelet.conf</code>. <code>$NODE</code> must be set to the name of the existing failed node in the cluster. Modify the resulted <code>kubelet.conf</code> manually to adjust the cluster name and server endpoint, or pass <code>kubeconfig user --config</code> (it accepts <code>InitConfiguration</code>). If your cluster does not have the <code>ca.key</code> you must sign the embedded certificates in the <code>kubelet.conf</code> externally.</p>
 </li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">以上命令需要传入config参数，kubeadm的config文件生成方式如下：</span></span><br><span class="line">kubeadm config print init-defaults &amp;&gt;init-defaults</span><br><span class="line"><span class="meta">#</span><span class="bash">生成临时node授权配置文件的参考命令如下：</span></span><br><span class="line">kubeadm kubeconfig user --org system:nodes --client-name system:node:k8s-node1 --config init-defaults</span><br><span class="line">kubeadm kubeconfig user --org system:nodes --client-name system:node:k8s-node2 --config init-defaults</span><br><span class="line">kubeadm kubeconfig user --org system:nodes --client-name system:node:localhost.localdomain --config init-defaults</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
 <li><p>Copy this resulted <code>kubelet.conf</code> to <code>/etc/kubernetes/kubelet.conf</code> on the failed node.</p>
 </li>
 <li><p>Restart the kubelet (<code>systemctl restart kubelet</code>) on the failed node and wait for <code>/var/lib/kubelet/pki/kubelet-client-current.pem</code> to be recreated.</p>
