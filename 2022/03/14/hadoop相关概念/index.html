@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" integrity="sha256-jTIdiMuX/e3DGJUGwl3pKSxuc6YOuqtJYkM0bGQESA4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sandszy.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Hadoop：是一个分布式计算的开源框架 HDFS：是Hadoop的三大核心组件之一 Hive：用户处理存储在HDFS中的数据，hive的意义就是把好写的hive的sql转换为复杂难写的map-reduce程序。 Hbase：是一款基于HDFS的数据库，是一种NoSQL数据库，主要适用于海量明细数据（十亿、百亿）的随机实时查询，如日志明细、交易清单、轨迹行为等。 Hive与HBase的区别与联系区">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hadoop相关概念">
+<meta property="og:url" content="http://sandszy.github.io/2022/03/14/hadoop%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/index.html">
+<meta property="og:site_name" content="All things are dificult before they are easy.">
+<meta property="og:description" content="Hadoop：是一个分布式计算的开源框架 HDFS：是Hadoop的三大核心组件之一 Hive：用户处理存储在HDFS中的数据，hive的意义就是把好写的hive的sql转换为复杂难写的map-reduce程序。 Hbase：是一款基于HDFS的数据库，是一种NoSQL数据库，主要适用于海量明细数据（十亿、百亿）的随机实时查询，如日志明细、交易清单、轨迹行为等。 Hive与HBase的区别与联系区">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://sandszy.github.io/2022/03/14/hadoop%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/1.png">
+<meta property="og:image" content="http://sandszy.github.io/2022/03/14/hadoop%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/1.png">
+<meta property="article:published_time" content="2022-03-14T12:58:46.000Z">
+<meta property="article:modified_time" content="2025-05-29T15:07:18.904Z">
+<meta property="article:author" content="sandszy">
+<meta property="article:tag" content="big data">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://sandszy.github.io/2022/03/14/hadoop%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/1.png">
+
+
+<link rel="canonical" href="http://sandszy.github.io/2022/03/14/hadoop%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://sandszy.github.io/2022/03/14/hadoop%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/","path":"2022/03/14/hadoop相关概念/","title":"hadoop相关概念"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>hadoop相关概念 | All things are dificult before they are easy.</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">All things are dificult before they are easy.</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">8</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hive%E4%B8%8EHBase%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E8%81%94%E7%B3%BB"><span class="nav-number">1.</span> <span class="nav-text">Hive与HBase的区别与联系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E5%88%AB%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">区别：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%94%E7%B3%BB%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">联系：</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sandszy</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://sandszy.github.io/2022/03/14/hadoop%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sandszy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="All things are dificult before they are easy.">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="hadoop相关概念 | All things are dificult before they are easy.">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          hadoop相关概念
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-14 20:58:46" itemprop="dateCreated datePublished" datetime="2022-03-14T20:58:46+08:00">2022-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-05-29 23:07:18" itemprop="dateModified" datetime="2025-05-29T23:07:18+08:00">2025-05-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><strong>Hadoop</strong>：是一个分布式计算的开源框架</p>
+<p><strong>HDFS：</strong>是Hadoop的三大核心组件之一</p>
+<p><strong>Hive：</strong>用户处理存储在HDFS中的数据，hive的意义就是把好写的hive的sql转换为复杂难写的map-reduce程序。</p>
+<p><strong>Hbase：</strong>是一款基于HDFS的数据库，是一种NoSQL数据库，主要适用于海量明细数据（十亿、百亿）的随机实时查询，如日志明细、交易清单、轨迹行为等。</p>
+<h2 id="Hive与HBase的区别与联系"><a href="#Hive与HBase的区别与联系" class="headerlink" title="Hive与HBase的区别与联系"></a><strong>Hive与HBase的区别与联系</strong></h2><h3 id="区别："><a href="#区别：" class="headerlink" title="区别："></a><strong>区别：</strong></h3><p>Hive：Hive是基于Hadoop的一个<strong>数据仓库工具</strong>，可以将结构化的数据文件映射为一张数据库表，并提供简单的sql查询功能。</p>
+<ul>
+<li><strong>Hive本身不存储和计算数据，它完全依赖于HDFS和MapReduce，Hive中的表纯逻辑。****hive需要用到hdfs存储文件，需要用到MapReduce计算框架。</strong></li>
+<li><strong>hive可以认为是map-reduce的一个包装。hive的意义就是把好写的hive的sql转换为复杂难写的map-reduce程序。</strong></li>
+</ul>
+<p>HBase：HBase是Hadoop的<strong>数据库</strong>，一个分布式、可扩展、大数据的存储。</p>
+<ul>
+<li><strong>hbase是物理表，不是逻辑表，提供一个超大的内存hash表，搜索引擎通过它来存储索引，方便查询操作</strong></li>
+<li><strong>hbase可以认为是hdfs的一个包装。他的本质是数据存储，是个NoSql数据库；hbase部署于hdfs之上，并且克服了hdfs在随机读写方面的缺点。</strong></li>
+</ul>
+<h3 id="联系："><a href="#联系：" class="headerlink" title="联系："></a><strong>联系：</strong></h3><blockquote>
+<p><strong>Hbase和Hive在大数据架构中处在不同位置，Hbase主要解决实时数据查询问题，Hive主要解决数据处理和计算问题，一般是配合使用。</strong></p>
+</blockquote>
+<p>在大数据架构中，Hive和HBase是协作关系，数据流一般如下图：</p>
+<ol>
+<li>通过ETL工具将数据源抽取到HDFS存储；</li>
+<li>通过Hive清洗、处理和计算原始数据；</li>
+<li>HIve清洗处理后的结果，如果是面向海量数据随机查询场景的可存入Hbase</li>
+<li>数据应用从HBase查询数据；</li>
+</ol>
+<p><img src="1.png" alt="1"></p>
+<img src="/2022/03/14/hadoop%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5/1.png" class="" title="This is an image">
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/big-data/" rel="tag"># big data</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/14/%E5%A6%82%E4%BD%95%E5%9C%A8mac%E7%9A%84%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%94%A8App%E6%89%93%E5%BC%80%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6/" rel="prev" title="如何在mac的终端环境下用App打开一个文件">
+                  <i class="fa fa-chevron-left"></i> 如何在mac的终端环境下用App打开一个文件
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/03/17/%E4%B8%89%E4%B8%AA%E6%94%AF%E6%9F%B1/" rel="next" title="三个支柱">
+                  三个支柱 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sandszy</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

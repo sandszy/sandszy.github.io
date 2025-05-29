@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" integrity="sha256-jTIdiMuX/e3DGJUGwl3pKSxuc6YOuqtJYkM0bGQESA4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sandszy.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="参考文档：https:&#x2F;&#x2F;kubernetes.io&#x2F;zh-cn&#x2F;docs&#x2F;tasks&#x2F;administer-cluster&#x2F;kubeadm&#x2F;kubeadm-certs&#x2F;  检查证书是否过期12kubeadm certs check-expiration#运行后发现默认情况下除了CA证书是8年过期，其他包括etcd在内的所有证书均是1年过期，为已过期状态  手动更新证书123456kubeadm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kubeadm搭建的k8s集群证书过期如何更新">
+<meta property="og:url" content="http://sandszy.github.io/2023/06/23/kubeadm%E6%90%AD%E5%BB%BA%E7%9A%84k8s%E9%9B%86%E7%BE%A4%E8%AF%81%E4%B9%A6%E8%BF%87%E6%9C%9F%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0/index.html">
+<meta property="og:site_name" content="All things are dificult before they are easy.">
+<meta property="og:description" content="参考文档：https:&#x2F;&#x2F;kubernetes.io&#x2F;zh-cn&#x2F;docs&#x2F;tasks&#x2F;administer-cluster&#x2F;kubeadm&#x2F;kubeadm-certs&#x2F;  检查证书是否过期12kubeadm certs check-expiration#运行后发现默认情况下除了CA证书是8年过期，其他包括etcd在内的所有证书均是1年过期，为已过期状态  手动更新证书123456kubeadm">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-06-23T15:25:09.000Z">
+<meta property="article:modified_time" content="2025-05-29T15:07:18.914Z">
+<meta property="article:author" content="sandszy">
+<meta property="article:tag" content="kubernetes">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://sandszy.github.io/2023/06/23/kubeadm%E6%90%AD%E5%BB%BA%E7%9A%84k8s%E9%9B%86%E7%BE%A4%E8%AF%81%E4%B9%A6%E8%BF%87%E6%9C%9F%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://sandszy.github.io/2023/06/23/kubeadm%E6%90%AD%E5%BB%BA%E7%9A%84k8s%E9%9B%86%E7%BE%A4%E8%AF%81%E4%B9%A6%E8%BF%87%E6%9C%9F%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0/","path":"2023/06/23/kubeadm搭建的k8s集群证书过期如何更新/","title":"kubeadm搭建的k8s集群证书过期如何更新"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>kubeadm搭建的k8s集群证书过期如何更新 | All things are dificult before they are easy.</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">All things are dificult before they are easy.</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">8</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E8%AF%81%E4%B9%A6%E6%98%AF%E5%90%A6%E8%BF%87%E6%9C%9F"><span class="nav-number">1.</span> <span class="nav-text">检查证书是否过期</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E6%9B%B4%E6%96%B0%E8%AF%81%E4%B9%A6"><span class="nav-number">2.</span> <span class="nav-text">手动更新证书</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E8%A6%81-2023%E5%B9%B46%E6%9C%8823%E6%97%A5%E6%9B%B4%E6%96%B0"><span class="nav-number">3.</span> <span class="nav-text">[重要]2023年6月23日更新</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Kubelet-client-certificate-rotation-fails"><span class="nav-number">3.1.</span> <span class="nav-text">Kubelet client certificate rotation fails</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sandszy</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://sandszy.github.io/2023/06/23/kubeadm%E6%90%AD%E5%BB%BA%E7%9A%84k8s%E9%9B%86%E7%BE%A4%E8%AF%81%E4%B9%A6%E8%BF%87%E6%9C%9F%E5%A6%82%E4%BD%95%E6%9B%B4%E6%96%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sandszy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="All things are dificult before they are easy.">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="kubeadm搭建的k8s集群证书过期如何更新 | All things are dificult before they are easy.">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          kubeadm搭建的k8s集群证书过期如何更新
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-06-23 23:25:09" itemprop="dateCreated datePublished" datetime="2023-06-23T23:25:09+08:00">2023-06-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-05-29 23:07:18" itemprop="dateModified" datetime="2025-05-29T23:07:18+08:00">2025-05-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <ul>
+<li>参考文档：<a target="_blank" rel="noopener" href="https://kubernetes.io/zh-cn/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/">https://kubernetes.io/zh-cn/docs/tasks/administer-cluster/kubeadm/kubeadm-certs/</a></li>
+</ul>
+<h1 id="检查证书是否过期"><a href="#检查证书是否过期" class="headerlink" title="检查证书是否过期"></a>检查证书是否过期</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubeadm certs check-expiration</span><br><span class="line"><span class="meta">#</span><span class="bash">运行后发现默认情况下除了CA证书是8年过期，其他包括etcd在内的所有证书均是1年过期，为已过期状态</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="手动更新证书"><a href="#手动更新证书" class="headerlink" title="手动更新证书"></a>手动更新证书</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">kubeadm certs renew</span><br><span class="line"><span class="meta">#</span><span class="bash">执行后需要重启apiserver etcd scheduler和controller-manager，但是使用如下参考文档中的做法未生效</span></span><br><span class="line"><span class="meta">#</span><span class="bash">要重启静态 Pod 你可以临时将清单文件从 /etc/kubernetes/manifests/ 移除并等待 20 秒 （参考 KubeletConfiguration 结构 中的fileCheckFrequency 值）。</span> </span><br><span class="line"><span class="meta">#</span><span class="bash">所以通过docker restart命令重启如上4个容器</span></span><br><span class="line">docker restart &lt;容器id&gt;</span><br><span class="line"><span class="meta">#</span><span class="bash">如上命令执行完成后集群恢复正常</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="重要-2023年6月23日更新"><a href="#重要-2023年6月23日更新" class="headerlink" title="[重要]2023年6月23日更新"></a>[重要]2023年6月23日更新</h1><p>由于kubelet的证书更新不在其中：</p>
+<blockquote>
+<p><strong>Note:</strong> <code>kubelet.conf</code> is not included in the list above because kubeadm configures kubelet for <a target="_blank" rel="noopener" href="https://kubernetes.io/docs/tasks/tls/certificate-rotation/">automatic certificate renewal</a> with rotatable certificates under <code>/var/lib/kubelet/pki</code>. To repair an expired kubelet client certificate see <a target="_blank" rel="noopener" href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/#kubelet-client-cert">Kubelet client certificate rotation fails</a>.</p>
+</blockquote>
+<p>在kubelet证书过期后，管控面的kubelet均无法启动，导致无法更新证书。解决方法如下：</p>
+<p>首先要手段启动管控面的etcd、apiserver、scheduler、controller-manager：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker start &lt;k8s network container id&gt; &lt;etcd container id&gt;</span><br><span class="line">docker start &lt;k8s network container id&gt; &lt;apiserver container id&gt;</span><br><span class="line">docker start &lt;k8s network container id&gt; &lt;scheduler container id&gt;</span><br><span class="line">docker start &lt;k8s network container id&gt; &lt;controller-manager container id&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后参考<a target="_blank" rel="noopener" href="https://v1-23.docs.kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/#kubelet-client-cert%E5%AF%B9kubelet%E8%BF%9B%E8%A1%8C%E4%BF%AE%E5%A4%8D%EF%BC%9A">https://v1-23.docs.kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/#kubelet-client-cert对kubelet进行修复：</a></p>
+<h2 id="Kubelet-client-certificate-rotation-fails"><a href="#Kubelet-client-certificate-rotation-fails" class="headerlink" title="Kubelet client certificate rotation fails"></a>Kubelet client certificate rotation fails</h2><p>By default, kubeadm configures a kubelet with automatic rotation of client certificates by using the <code>/var/lib/kubelet/pki/kubelet-client-current.pem</code> symlink specified in <code>/etc/kubernetes/kubelet.conf</code>. If this rotation process fails you might see errors such as <code>x509: certificate has expired or is not yet valid</code> in kube-apiserver logs. To fix the issue you must follow these steps:</p>
+<ol>
+<li><p>Backup and delete <code>/etc/kubernetes/kubelet.conf</code> and <code>/var/lib/kubelet/pki/kubelet-client*</code> from the failed node.</p>
+</li>
+<li><p>From a working control plane node in the cluster that has <code>/etc/kubernetes/pki/ca.key</code> execute <code>kubeadm kubeconfig user --org system:nodes --client-name system:node:$NODE &gt; kubelet.conf</code>. <code>$NODE</code> must be set to the name of the existing failed node in the cluster. Modify the resulted <code>kubelet.conf</code> manually to adjust the cluster name and server endpoint, or pass <code>kubeconfig user --config</code> (it accepts <code>InitConfiguration</code>). If your cluster does not have the <code>ca.key</code> you must sign the embedded certificates in the <code>kubelet.conf</code> externally.</p>
+</li>
+<li><p>Copy this resulted <code>kubelet.conf</code> to <code>/etc/kubernetes/kubelet.conf</code> on the failed node.</p>
+</li>
+<li><p>Restart the kubelet (<code>systemctl restart kubelet</code>) on the failed node and wait for <code>/var/lib/kubelet/pki/kubelet-client-current.pem</code> to be recreated.</p>
+</li>
+<li><p>Manually edit the <code>kubelet.conf</code> to point to the rotated kubelet client certificates, by replacing <code>client-certificate-data</code> and <code>client-key-data</code> with:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">client-certificate:</span> <span class="string">/var/lib/kubelet/pki/kubelet-client-current.pem</span></span><br><span class="line"><span class="attr">client-key:</span> <span class="string">/var/lib/kubelet/pki/kubelet-client-current.pem</span></span><br></pre></td></tr></table></figure></li>
+<li><p>Restart the kubelet.</p>
+</li>
+<li><p>Make sure the node becomes <code>Ready</code>.</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/k8s/" rel="tag"># kubernetes</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/01/03/%E5%8D%95%E8%8A%82%E7%82%B9etcd%E5%9C%A8%E8%93%9D%E5%B1%8F%E5%90%8E%E6%95%B0%E6%8D%AE%E6%8D%9F%E5%9D%8F%E4%BF%AE%E5%A4%8D%E8%AE%B0%E5%BD%95/" rel="prev" title="单节点etcd在蓝屏后数据损坏修复记录">
+                  <i class="fa fa-chevron-left"></i> 单节点etcd在蓝屏后数据损坏修复记录
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/05/29/hello-world/" rel="next" title="Hello World">
+                  Hello World <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sandszy</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

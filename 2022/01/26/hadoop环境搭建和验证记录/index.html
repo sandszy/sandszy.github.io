@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" integrity="sha256-jTIdiMuX/e3DGJUGwl3pKSxuc6YOuqtJYkM0bGQESA4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"sandszy.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="hadoop环境搭建和验证记录作业1:本地部署 Hadoop 环境step1:准备基础运行环境操作系统：windows 11虚拟化软件：vmware workstation 16虚拟机1操作系统：opensuse leap 15.3虚拟机2操作系统：opensuse leap 15.3 step2:在虚拟机1和2上部署docker容器运行环境12#采用suse的包管理工具zypper命令部署zyp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hadoop环境搭建和验证记录">
+<meta property="og:url" content="http://sandszy.github.io/2022/01/26/hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%92%8C%E9%AA%8C%E8%AF%81%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="All things are dificult before they are easy.">
+<meta property="og:description" content="hadoop环境搭建和验证记录作业1:本地部署 Hadoop 环境step1:准备基础运行环境操作系统：windows 11虚拟化软件：vmware workstation 16虚拟机1操作系统：opensuse leap 15.3虚拟机2操作系统：opensuse leap 15.3 step2:在虚拟机1和2上部署docker容器运行环境12#采用suse的包管理工具zypper命令部署zyp">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:/Users/User2/AppData/Roaming/Typora/typora-user-images/image-20220305153935431.png">
+<meta property="og:image" content="c:/Users/User2/AppData/Roaming/Typora/typora-user-images/image-20220305160418272.png">
+<meta property="og:image" content="c:/Users/User2/AppData/Roaming/Typora/typora-user-images/image-20220305221554363.png">
+<meta property="og:image" content="c:/Users/User2/AppData/Roaming/Typora/typora-user-images/image-20220305225525418.png">
+<meta property="article:published_time" content="2022-01-26T06:47:54.000Z">
+<meta property="article:modified_time" content="2025-05-29T15:07:18.904Z">
+<meta property="article:author" content="sandszy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/User2/AppData/Roaming/Typora/typora-user-images/image-20220305153935431.png">
+
+
+<link rel="canonical" href="http://sandszy.github.io/2022/01/26/hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%92%8C%E9%AA%8C%E8%AF%81%E8%AE%B0%E5%BD%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://sandszy.github.io/2022/01/26/hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%92%8C%E9%AA%8C%E8%AF%81%E8%AE%B0%E5%BD%95/","path":"2022/01/26/hadoop环境搭建和验证记录/","title":"hadoop环境搭建和验证记录"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>hadoop环境搭建和验证记录 | All things are dificult before they are easy.</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">All things are dificult before they are easy.</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">8</span></a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%92%8C%E9%AA%8C%E8%AF%81%E8%AE%B0%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">hadoop环境搭建和验证记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A1-%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2-Hadoop-%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.</span> <span class="nav-text">作业1:本地部署 Hadoop 环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#step1-%E5%87%86%E5%A4%87%E5%9F%BA%E7%A1%80%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.1.</span> <span class="nav-text">step1:准备基础运行环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step2-%E5%9C%A8%E8%99%9A%E6%8B%9F%E6%9C%BA1%E5%92%8C2%E4%B8%8A%E9%83%A8%E7%BD%B2docker%E5%AE%B9%E5%99%A8%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.2.</span> <span class="nav-text">step2:在虚拟机1和2上部署docker容器运行环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step3-%E5%9C%A8%E8%99%9A%E6%8B%9F%E6%9C%BA1%E5%92%8C2%E4%B8%8A%E9%83%A8%E7%BD%B2kubernetes%E5%AE%B9%E5%99%A8%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.3.</span> <span class="nav-text">step3:在虚拟机1和2上部署kubernetes容器运行环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step4-%E9%87%87%E7%94%A8k8s-operator%E9%83%A8%E7%BD%B2hadoop%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.4.</span> <span class="nav-text">step4:采用k8s operator部署hadoop环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step5-%E9%AA%8C%E8%AF%81hadoop%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.5.</span> <span class="nav-text">step5:验证hadoop环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A2-%E4%BD%BF%E7%94%A8-Hadoop-Shell-%E4%BB%A5%E5%8F%8A-Python-Java-%E5%AF%B9-HDFS-%E8%BF%9B%E8%A1%8C%E6%96%87%E4%BB%B6%E7%9A%84%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD"><span class="nav-number">1.2.</span> <span class="nav-text">作业2:使用 Hadoop Shell 以及 Python &#x2F; Java 对 HDFS 进行文件的上传和下载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#step1-%E5%A4%8D%E5%88%B6%E6%B5%8B%E8%AF%95%E6%96%87%E4%BB%B6Alice-txt%E5%88%B0master%E8%8A%82%E7%82%B9"><span class="nav-number">1.2.1.</span> <span class="nav-text">step1:复制测试文件Alice.txt到master节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step2-shell%E5%9C%A8hdfs%E4%B8%8A%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9%E5%B9%B6%E4%B8%8A%E4%BC%A0Alice-txt"><span class="nav-number">1.2.2.</span> <span class="nav-text">step2:shell在hdfs上创建一个新的文件夹并上传Alice.txt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step3-shell%E9%AA%8C%E8%AF%81%E4%B8%8A%E4%BC%A0%E6%88%90%E5%8A%9F"><span class="nav-number">1.2.3.</span> <span class="nav-text">step3:shell验证上传成功</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step4-shell%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.4.</span> <span class="nav-text">step4:shell下载文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step5-shell%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6%E9%AA%8C%E8%AF%81"><span class="nav-number">1.2.5.</span> <span class="nav-text">step5:shell下载文件验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step6-python%E4%B8%8A%E4%BC%A0%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-number">1.2.6.</span> <span class="nav-text">step6:python上传环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step7-python%E4%B8%8A%E4%BC%A0"><span class="nav-number">1.2.7.</span> <span class="nav-text">step7:python上传</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B91"><span class="nav-number">1.2.7.1.</span> <span class="nav-text">注意事项1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B92"><span class="nav-number">1.2.7.2.</span> <span class="nav-text">注意事项2</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step8-python%E4%B8%8A%E4%BC%A0%E9%AA%8C%E8%AF%81"><span class="nav-number">1.2.8.</span> <span class="nav-text">step8:python上传验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step9-python%E4%B8%8B%E8%BD%BD"><span class="nav-number">1.2.9.</span> <span class="nav-text">step9:python下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step10-python%E4%B8%8B%E8%BD%BD%E9%AA%8C%E8%AF%81"><span class="nav-number">1.2.10.</span> <span class="nav-text">step10:python下载验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A3-%E4%BD%BF%E7%94%A8-Hadoop-%E5%86%85%E7%BD%AE%E7%9A%84%E7%A4%BA%E4%BE%8B%E7%A8%8B%E5%BA%8F%E5%AE%8C%E6%88%90%E8%AF%8D%E9%A2%91%E7%BB%9F%E8%AE%A1%E5%AE%9E%E9%AA%8C"><span class="nav-number">1.3.</span> <span class="nav-text">作业3:使用 Hadoop 内置的示例程序完成词频统计实验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#step1-%E4%BD%BF%E7%94%A8%E5%86%85%E7%BD%AE%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%AF%B9alice%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E8%AF%8D%E9%A2%91%E7%BB%9F%E8%AE%A1"><span class="nav-number">1.3.1.</span> <span class="nav-text">step1:使用内置的程序对alice文件进行词频统计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step2-%E6%9F%A5%E7%9C%8B%E7%BB%93%E6%9E%9C"><span class="nav-number">1.3.2.</span> <span class="nav-text">step2:查看结果</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">sandszy</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://sandszy.github.io/2022/01/26/hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA%E5%92%8C%E9%AA%8C%E8%AF%81%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="sandszy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="All things are dificult before they are easy.">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="hadoop环境搭建和验证记录 | All things are dificult before they are easy.">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          hadoop环境搭建和验证记录
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-01-26 14:47:54" itemprop="dateCreated datePublished" datetime="2022-01-26T14:47:54+08:00">2022-01-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-05-29 23:07:18" itemprop="dateModified" datetime="2025-05-29T23:07:18+08:00">2025-05-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="hadoop环境搭建和验证记录"><a href="#hadoop环境搭建和验证记录" class="headerlink" title="hadoop环境搭建和验证记录"></a>hadoop环境搭建和验证记录</h1><h2 id="作业1-本地部署-Hadoop-环境"><a href="#作业1-本地部署-Hadoop-环境" class="headerlink" title="作业1:本地部署 Hadoop 环境"></a>作业1:本地部署 Hadoop 环境</h2><h3 id="step1-准备基础运行环境"><a href="#step1-准备基础运行环境" class="headerlink" title="step1:准备基础运行环境"></a>step1:准备基础运行环境</h3><p>操作系统：windows 11<br>虚拟化软件：vmware workstation 16<br>虚拟机1操作系统：opensuse leap 15.3<br>虚拟机2操作系统：opensuse leap 15.3</p>
+<h3 id="step2-在虚拟机1和2上部署docker容器运行环境"><a href="#step2-在虚拟机1和2上部署docker容器运行环境" class="headerlink" title="step2:在虚拟机1和2上部署docker容器运行环境"></a>step2:在虚拟机1和2上部署docker容器运行环境</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">采用suse的包管理工具zypper命令部署</span></span><br><span class="line">zypper in docker</span><br></pre></td></tr></table></figure>
+
+<h3 id="step3-在虚拟机1和2上部署kubernetes容器运行环境"><a href="#step3-在虚拟机1和2上部署kubernetes容器运行环境" class="headerlink" title="step3:在虚拟机1和2上部署kubernetes容器运行环境"></a>step3:在虚拟机1和2上部署kubernetes容器运行环境</h3><p>使用kubeadm参考如下文档部署k8s环境，k8s环境配置较为复杂，使用kubeadm工具可以大幅度简化，具体步骤非重点不赘述。</p>
+<p>使用k8s的原因为可以利用k8s生态已经封装好的hadoop部署API，一键式搭建hadoop环境。</p>
+<p><a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/setup/production-environment/tools/kubeadm/install-kubeadm/">https://kubernetes.io/zh/docs/setup/production-environment/tools/kubeadm/install-kubeadm/</a></p>
+<p>k8s版本为1.21.2</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">localhost:~ # kubectl version</span><br><span class="line">Client Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;21&quot;, GitVersion:&quot;v1.21.2&quot;, GitCommit:&quot;092fbfbf53427de67cac1e9fa54aaa09a28371d7&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2021-06-16T12:59:11Z&quot;, GoVersion:&quot;go1.16.5&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;&#125;</span><br><span class="line">Server Version: version.Info&#123;Major:&quot;1&quot;, Minor:&quot;21&quot;, GitVersion:&quot;v1.21.2&quot;, GitCommit:&quot;092fbfbf53427de67cac1e9fa54aaa09a28371d7&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2021-06-16T12:53:14Z&quot;, GoVersion:&quot;go1.16.5&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="step4-采用k8s-operator部署hadoop环境"><a href="#step4-采用k8s-operator部署hadoop环境" class="headerlink" title="step4:采用k8s operator部署hadoop环境"></a>step4:采用k8s operator部署hadoop环境</h3><p>采用项目：<a target="_blank" rel="noopener" href="https://github.com/alicek106/k8s-hadoop-operator">https://github.com/alicek106/k8s-hadoop-operator</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">部署步骤：</span></span><br><span class="line">git clone https://github.com/alicek106/k8s-hadoop-operator.git</span><br><span class="line">cd k8s-hadoop-operator/temporary-gopath/src/hadoop-operator/</span><br><span class="line">kubectl apply -f deploy/</span><br><span class="line">kubectl apply -f deploy/crds/alicek106_v1alpha1_hadoopservice_cr.yaml</span><br></pre></td></tr></table></figure>
+<h3 id="step5-验证hadoop环境"><a href="#step5-验证hadoop环境" class="headerlink" title="step5:验证hadoop环境"></a>step5:验证hadoop环境</h3><ul>
+<li>登录master节点验证</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">验证步骤</span></span><br><span class="line">localhost:~ # kubectl get pods</span><br><span class="line">NAME                                                              READY   STATUS    RESTARTS   AGE</span><br><span class="line">example-hadoopservice-hadoop-master-0                             1/1     Running   0          17h</span><br><span class="line">example-hadoopservice-hadoop-slave-0                              1/1     Running   0          17h</span><br><span class="line">example-hadoopservice-hadoop-slave-1                              1/1     Running   0          17h</span><br><span class="line">example-hadoopservice-hadoop-slave-2                              1/1     Running   0          17h</span><br><span class="line">hadoop-operator-7467d5d8f4-vhxhm                                  1/1     Running   0          17h</span><br><span class="line">localhost:~ # kubectl get hds</span><br><span class="line">NAME                    AGE</span><br><span class="line">example-hadoopservice   17h</span><br><span class="line"><span class="meta">#</span><span class="bash">获取登录密码</span></span><br><span class="line">localhost:~ # kubectl logs hadoop-operator-7467d5d8f4-vhxhm|grep pass</span><br><span class="line">&#123;&quot;level&quot;:&quot;info&quot;,&quot;ts&quot;:1646403081.5452356,&quot;logger&quot;:&quot;controller_hadoopservice&quot;,&quot;msg&quot;:&quot;Generated password is MFIN&quot;&#125;</span><br><span class="line"><span class="meta">#</span><span class="bash">获取登录地址</span></span><br><span class="line">localhost:~ # kubectl get svc|grep hadoop</span><br><span class="line">example-hadoopservice-hadoop-master-svc                ClusterIP      None            &lt;none&gt;        &lt;none&gt;                                        17h</span><br><span class="line">example-hadoopservice-hadoop-master-svc-external       NodePort       10.110.162.31   &lt;none&gt;        22:31242/TCP,8088:31715/TCP,50070:32525/TCP   17h</span><br><span class="line">example-hadoopservice-hadoop-slave-svc                 ClusterIP      None            &lt;none&gt;        22/TCP                                        17h</span><br><span class="line">hadoop-operator                                        ClusterIP      10.111.104.64   &lt;none&gt;        8383/TCP                                      17h</span><br><span class="line"><span class="meta">#</span><span class="bash">登录hadoop master节点：ssh://root:***@192.168.221.128:31242</span></span><br><span class="line">root@example-hadoopservice-hadoop-master-0:~# hdfs dfsadmin -report</span><br><span class="line">Configured Capacity: 64411926528 (59.99 GB)</span><br><span class="line">Present Capacity: 41890959360 (39.01 GB)</span><br><span class="line">DFS Remaining: 41890947072 (39.01 GB)</span><br><span class="line">DFS Used: 12288 (12 KB)</span><br><span class="line">DFS Used%: 0.00%</span><br><span class="line">Under replicated blocks: 0</span><br><span class="line">Blocks with corrupt replicas: 0</span><br><span class="line">Missing blocks: 0</span><br><span class="line"></span><br><span class="line">-------------------------------------------------</span><br><span class="line">Live datanodes (3):</span><br><span class="line"></span><br><span class="line">Name: 10.244.1.167:50010 (example-hadoopservice-hadoop-slave-1.example-hadoopservice-hadoop-slave-svc.default.svc.cluster.local)</span><br><span class="line">Hostname: example-hadoopservice-hadoop-slave-1.example-hadoopservice-hadoop-slave-svc.default.svc.cluster.local</span><br><span class="line">Decommission Status : Normal</span><br><span class="line">Configured Capacity: 21470642176 (20.00 GB)</span><br><span class="line">DFS Used: 4096 (4 KB)</span><br><span class="line">Non DFS Used: 7506989056 (6.99 GB)</span><br><span class="line">DFS Remaining: 13963649024 (13.00 GB)</span><br><span class="line">DFS Used%: 0.00%</span><br><span class="line">DFS Remaining%: 65.04%</span><br><span class="line">Configured Cache Capacity: 0 (0 B)</span><br><span class="line">Cache Used: 0 (0 B)</span><br><span class="line">Cache Remaining: 0 (0 B)</span><br><span class="line">Cache Used%: 100.00%</span><br><span class="line">Cache Remaining%: 0.00%</span><br><span class="line">Xceivers: 1</span><br><span class="line">Last contact: Sat Mar 05 07:36:18 UTC 2022</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Name: 10.244.1.165:50010 (example-hadoopservice-hadoop-slave-2.example-hadoopservice-hadoop-slave-svc.default.svc.cluster.local)</span><br><span class="line">Hostname: example-hadoopservice-hadoop-slave-2.example-hadoopservice-hadoop-slave-svc.default.svc.cluster.local</span><br><span class="line">Decommission Status : Normal</span><br><span class="line">Configured Capacity: 21470642176 (20.00 GB)</span><br><span class="line">DFS Used: 4096 (4 KB)</span><br><span class="line">Non DFS Used: 7506989056 (6.99 GB)</span><br><span class="line">DFS Remaining: 13963649024 (13.00 GB)</span><br><span class="line">DFS Used%: 0.00%</span><br><span class="line">DFS Remaining%: 65.04%</span><br><span class="line">Configured Cache Capacity: 0 (0 B)</span><br><span class="line">Cache Used: 0 (0 B)</span><br><span class="line">Cache Remaining: 0 (0 B)</span><br><span class="line">Cache Used%: 100.00%</span><br><span class="line">Cache Remaining%: 0.00%</span><br><span class="line">Xceivers: 1</span><br><span class="line">Last contact: Sat Mar 05 07:36:18 UTC 2022</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Name: 10.244.1.166:50010 (example-hadoopservice-hadoop-slave-0.example-hadoopservice-hadoop-slave-svc.default.svc.cluster.local)</span><br><span class="line">Hostname: example-hadoopservice-hadoop-slave-0.example-hadoopservice-hadoop-slave-svc.default.svc.cluster.local</span><br><span class="line">Decommission Status : Normal</span><br><span class="line">Configured Capacity: 21470642176 (20.00 GB)</span><br><span class="line">DFS Used: 4096 (4 KB)</span><br><span class="line">Non DFS Used: 7506989056 (6.99 GB)</span><br><span class="line">DFS Remaining: 13963649024 (13.00 GB)</span><br><span class="line">DFS Used%: 0.00%</span><br><span class="line">DFS Remaining%: 65.04%</span><br><span class="line">Configured Cache Capacity: 0 (0 B)</span><br><span class="line">Cache Used: 0 (0 B)</span><br><span class="line">Cache Remaining: 0 (0 B)</span><br><span class="line">Cache Used%: 100.00%</span><br><span class="line">Cache Remaining%: 0.00%</span><br><span class="line">Xceivers: 1</span><br><span class="line">Last contact: Sat Mar 05 07:36:18 UTC 2022</span><br></pre></td></tr></table></figure>
+<ul>
+<li>打开web页面查看总览信息</li>
+</ul>
+<p><img src="C:\Users\User2\AppData\Roaming\Typora\typora-user-images\image-20220305153935431.png" alt="image-20220305153935431"></p>
+<h2 id="作业2-使用-Hadoop-Shell-以及-Python-Java-对-HDFS-进行文件的上传和下载"><a href="#作业2-使用-Hadoop-Shell-以及-Python-Java-对-HDFS-进行文件的上传和下载" class="headerlink" title="作业2:使用 Hadoop Shell 以及 Python / Java 对 HDFS 进行文件的上传和下载"></a>作业2:使用 Hadoop Shell 以及 Python / Java 对 HDFS 进行文件的上传和下载</h2><h3 id="step1-复制测试文件Alice-txt到master节点"><a href="#step1-复制测试文件Alice-txt到master节点" class="headerlink" title="step1:复制测试文件Alice.txt到master节点"></a>step1:复制测试文件Alice.txt到master节点</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">D:\notebook\浙江大学培训\第九周2.16\大数据作业&gt;scp Alice.txt root@192.168.221.128:/root/homework</span><br><span class="line">The authenticity of host &#x27;192.168.221.128 (192.168.221.128)&#x27; can&#x27;t be established.</span><br><span class="line">ECDSA key fingerprint is SHA256:209VnIXh0c4lChAozSLuSDX3tAZfTkeuoKT3GsgG/NM.</span><br><span class="line">Are you sure you want to continue connecting (yes/no/[fingerprint])?</span><br><span class="line"></span><br><span class="line">D:\notebook\浙江大学培训\第九周2.16\大数据作业&gt;scp Alice.txt root@192.168.221.128:/root/homework</span><br><span class="line"></span><br><span class="line">D:\notebook\浙江大学培训\第九周2.16\大数据作业&gt;scp -oPort=31242 Alice.txt root@192.168.221.128:/root/homework</span><br><span class="line">The authenticity of host &#x27;[192.168.221.128]:31242 ([192.168.221.128]:31242)&#x27; can&#x27;t be established.</span><br><span class="line">ECDSA key fingerprint is SHA256:IQib1/sqe4U1SmQ3YoHSjtSeKEnJuI+4g1xzLaNlmLI.</span><br><span class="line">Are you sure you want to continue connecting (yes/no/[fingerprint])?</span><br><span class="line">Please type &#x27;yes&#x27;, &#x27;no&#x27; or the fingerprint:</span><br><span class="line">Warning: Permanently added &#x27;[192.168.221.128]:31242&#x27; (ECDSA) to the list of known hosts.</span><br><span class="line">root@192.168.221.128&#x27;s password:</span><br><span class="line">Alice.txt                                                                             100%  141KB   9.9MB/s   00:00</span><br></pre></td></tr></table></figure>
+
+<h3 id="step2-shell在hdfs上创建一个新的文件夹并上传Alice-txt"><a href="#step2-shell在hdfs上创建一个新的文件夹并上传Alice-txt" class="headerlink" title="step2:shell在hdfs上创建一个新的文件夹并上传Alice.txt"></a>step2:shell在hdfs上创建一个新的文件夹并上传Alice.txt</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@example-hadoopservice-hadoop-master-0:~/homework# hadoop fs -mkdir /input</span><br><span class="line">root@example-hadoopservice-hadoop-master-0:~/homework# hadoop fs -put /root/homework/Alice.txt /input/</span><br><span class="line">root@example-hadoopservice-hadoop-master-0:~/homework# </span><br></pre></td></tr></table></figure>
+
+<h3 id="step3-shell验证上传成功"><a href="#step3-shell验证上传成功" class="headerlink" title="step3:shell验证上传成功"></a>step3:shell验证上传成功</h3><ul>
+<li>命令行查看</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@example-hadoopservice-hadoop-master-0:~/homework# hadoop fs -ls -R /</span><br><span class="line">drwxr-xr-x   - root supergroup          0 2022-03-05 08:01 /input</span><br><span class="line">-rw-r--r--   2 root supergroup     144737 2022-03-05 08:01 /input/Alice.txt</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>通过web前台查看<a target="_blank" rel="noopener" href="http://192.168.221.128:32525/explorer.html#/input">http://192.168.221.128:32525/explorer.html#/input</a></li>
+</ul>
+<p><img src="C:\Users\User2\AppData\Roaming\Typora\typora-user-images\image-20220305160418272.png" alt="image-20220305160418272"></p>
+<h3 id="step4-shell下载文件"><a href="#step4-shell下载文件" class="headerlink" title="step4:shell下载文件"></a>step4:shell下载文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@example-hadoopservice-hadoop-master-0:~/homework# hadoop fs -get /input/Alice.txt /root/homework/Alice.txt-download</span><br></pre></td></tr></table></figure>
+
+<h3 id="step5-shell下载文件验证"><a href="#step5-shell下载文件验证" class="headerlink" title="step5:shell下载文件验证"></a>step5:shell下载文件验证</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@example-hadoopservice-hadoop-master-0:~/homework# ls</span><br><span class="line">Alice.txt  Alice.txt-download</span><br></pre></td></tr></table></figure>
+
+<h3 id="step6-python上传环境准备"><a href="#step6-python上传环境准备" class="headerlink" title="step6:python上传环境准备"></a>step6:python上传环境准备</h3><ul>
+<li>创建python虚拟环境</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">D:\notebook\浙江大学培训\第九周2.16\大数据作业&gt;virtualenv hadoop</span><br><span class="line">created virtual environment CPython3.9.10.final.0-64 in 981ms</span><br><span class="line">  creator CPython3Windows(dest=D:\notebook\浙江大学培训\第九周2.16\大数据作业\hadoop, clear=False, no_vcs_ignore=False, global=False)</span><br><span class="line">  seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=C:\Users\User2\AppData\Local\pypa\virtualenv)</span><br><span class="line">    added seed packages: pip==21.3.1, setuptools==60.2.0, wheel==0.37.1</span><br><span class="line">  activators BashActivator,BatchActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>激活虚拟环境并安装hdfs类库</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">D:\notebook\浙江大学培训\第九周2.16\大数据作业&gt;hadoop\Scripts\activate</span><br><span class="line">(hadoop) D:\notebook\浙江大学培训\第九周2.16\大数据作业&gt;pip install hdfs</span><br><span class="line">WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by &#x27;SSLError(SSLEOFError(8, &#x27;EOF occurred in violation of protocol (_ssl.c:1129)&#x27;))&#x27;: /simple/hdfs/</span><br><span class="line">WARNING: Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by &#x27;SSLError(SSLEOFError(8, &#x27;EOF occurred in violation of protocol (_ssl.c:1129)&#x27;))&#x27;: /simple/hdfs/</span><br><span class="line">Collecting hdfs</span><br><span class="line">  Downloading hdfs-2.6.0-py3-none-any.whl (33 kB)</span><br><span class="line">Collecting six&gt;=1.9.0</span><br><span class="line">  Using cached six-1.16.0-py2.py3-none-any.whl (11 kB)</span><br><span class="line">Collecting requests&gt;=2.7.0</span><br><span class="line">  Using cached requests-2.27.1-py2.py3-none-any.whl (63 kB)</span><br><span class="line">Collecting docopt</span><br><span class="line">  Downloading docopt-0.6.2.tar.gz (25 kB)</span><br><span class="line">  Preparing metadata (setup.py) ... done</span><br><span class="line">Collecting charset-normalizer~=2.0.0</span><br><span class="line">  Downloading charset_normalizer-2.0.12-py3-none-any.whl (39 kB)</span><br><span class="line">Collecting certifi&gt;=2017.4.17</span><br><span class="line">  Using cached certifi-2021.10.8-py2.py3-none-any.whl (149 kB)</span><br><span class="line">Collecting urllib3&lt;1.27,&gt;=1.21.1</span><br><span class="line">  Using cached urllib3-1.26.8-py2.py3-none-any.whl (138 kB)</span><br><span class="line">Collecting idna&lt;4,&gt;=2.5</span><br><span class="line">  Using cached idna-3.3-py3-none-any.whl (61 kB)</span><br><span class="line">Building wheels for collected packages: docopt</span><br><span class="line">  Building wheel for docopt (setup.py) ... done</span><br><span class="line">  Created wheel for docopt: filename=docopt-0.6.2-py2.py3-none-any.whl size=13723 sha256=ec26198f487d8a0a3484f2100737696de4b06aebb9fa207491676ec68b6cfe9b</span><br><span class="line">  Stored in directory: c:\users\user2\appdata\local\pip\cache\wheels\70\4a\46\1309fc853b8d395e60bafaf1b6df7845bdd82c95fd59dd8d2b</span><br><span class="line">Successfully built docopt</span><br><span class="line">Installing collected packages: urllib3, idna, charset-normalizer, certifi, six, requests, docopt, hdfs</span><br><span class="line">Successfully installed certifi-2021.10.8 charset-normalizer-2.0.12 docopt-0.6.2 hdfs-2.6.0 idna-3.3 requests-2.27.1 six-1.16.0 urllib3-1.26.8</span><br><span class="line">WARNING: You are using pip version 21.3.1; however, version 22.0.3 is available.</span><br><span class="line">You should consider upgrading via the &#x27;D:\notebook\浙江大学培训\第九周2.16\大数据作业\hadoop\Scripts\python.exe -m pip install --upgrade pip&#x27; command.</span><br><span class="line"></span><br><span class="line">(hadoop) D:\notebook\浙江大学培训\第九周2.16\大数据作业&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="step7-python上传"><a href="#step7-python上传" class="headerlink" title="step7:python上传"></a>step7:python上传</h3><ul>
+<li>使用vscode打开python虚拟环境所在目录，创建hadoop.py文件，内容如下</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> hdfs.client <span class="keyword">import</span> Client</span><br><span class="line">client = Client(<span class="string">&quot;http://192.168.221.128:32525&quot;</span>)</span><br><span class="line">client.makedirs(<span class="string">&quot;/input_python&quot;</span>)</span><br><span class="line">client.upload(<span class="string">&quot;/input_python&quot;</span>, <span class="string">&quot;/root/homework/Alice.txt&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="注意事项1"><a href="#注意事项1" class="headerlink" title="注意事项1"></a>注意事项1</h4><blockquote>
+<p>此处创建目录或其他write类操作时遇到如下报错：</p>
+<p><strong>HdfsError</strong>: Permission denied: user=dr.who, access=WRITE, inode=”/input”:root:supergroup:drwxr-xr-x</p>
+<p>原因是hdfs-default.xml中dfs.permissions.enabled为true所致，此处通过 hadoop fs -chmod -R 777 / 规避解决</p>
+<property>
+  <name>dfs.permissions.enabled</name>
+  <value>true</value>
+  <description>
+    If "true", enable permission checking in HDFS.
+    If "false", permission checking is turned off,
+    but all other behavior is unchanged.
+    Switching from one parameter value to the other does not change the mode,
+    owner or group of files or directories.
+  </description>
+</property>
+</blockquote>
+<h4 id="注意事项2"><a href="#注意事项2" class="headerlink" title="注意事项2"></a>注意事项2</h4><blockquote>
+<p>实际测试中发现，python上传文件时，除了通过node port映射出来的web端口通信外，还会与具体的slave通信，而slave则需要通过k8s集群的cluster ip与之通信。</p>
+<p>而本地windows环境与k8s集群的cluster ip无法联通，故最后通过k8s的master或者node节点部署python运行环境解决</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">root@example-hadoopservice-hadoop-master-0:~/homework# wget https://bootstrap.pypa.io/pip/3.4/get-pip.py</span><br><span class="line">--2022-03-05 14:02:46--  https://bootstrap.pypa.io/pip/3.4/get-pip.py</span><br><span class="line">Resolving bootstrap.pypa.io (bootstrap.pypa.io)... 151.101.108.175, 2a04:4e42:11::175</span><br><span class="line">Connecting to bootstrap.pypa.io (bootstrap.pypa.io)|151.101.108.175|:443... connected.</span><br><span class="line">HTTP request sent, awaiting response... 200 OK</span><br><span class="line">Length: 1708647 (1.6M) [text/x-python]</span><br><span class="line">Saving to: &#x27;get-pip.py&#x27;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">100%</span><span class="bash">[========================================================================================================================================================================&gt;] 1,708,647   3.79MB/s   <span class="keyword">in</span> 0.4s</span>   </span><br><span class="line"></span><br><span class="line">2022-03-05 14:02:48 (3.79 MB/s) - &#x27;get-pip.py&#x27; saved [1708647/1708647]</span><br><span class="line"></span><br><span class="line">root@example-hadoopservice-hadoop-master-0:~/homework# ls</span><br><span class="line">Alice.txt  Alice.txt-download  get-pip.py  hadoop  hadoop.tar  hadoop.zip</span><br><span class="line">root@example-hadoopservice-hadoop-master-0:~/homework# python3 get-pip.py </span><br><span class="line">DEPRECATION: Python 3.4 support has been deprecated. pip 19.1 will be the last one supporting it. Please upgrade your Python as Python 3.4 won&#x27;t be maintained after March 2019 (cf PEP 429).</span><br><span class="line">Collecting pip&lt;19.2</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/5c/e0/be401c003291b56efc55aeba6a80ab790d3d4cece2778288d65323009420/pip-19.1.1-py2.py3-none-any.whl (1.4MB)</span><br><span class="line">     |################################| 1.4MB 847kB/s </span><br><span class="line">Collecting setuptools</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/91/af/18d58ed8a8e7e6b91d71b0367034faf8ea41e1004018811388ed07a7f2d6/setuptools-43.0.0-py2.py3-none-any.whl (583kB)</span><br><span class="line">     |################################| 583kB 4.7MB/s </span><br><span class="line">Collecting wheel</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/00/83/b4a77d044e78ad1a45610eb88f745be2fd2c6d658f9798a15e384b7d57c9/wheel-0.33.6-py2.py3-none-any.whl</span><br><span class="line">Installing collected packages: pip, setuptools, wheel</span><br><span class="line">Successfully installed pip-19.1.1 setuptools-43.0.0 wheel-0.33.6</span><br><span class="line">root@example-hadoopservice-hadoop-master-0:~/homework# pip3 install hdfs</span><br><span class="line">DEPRECATION: Python 3.4 support has been deprecated. pip 19.1 will be the last one supporting it. Please upgrade your Python as Python 3.4 won&#x27;t be maintained after March 2019 (cf PEP 429).</span><br><span class="line">Collecting hdfs</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/08/f7/4c3fad73123a24d7394b6f40d1ec9c1cbf2e921cfea1797216ffd0a51fb1/hdfs-2.6.0-py3-none-any.whl</span><br><span class="line">Collecting docopt (from hdfs)</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/a2/55/8f8cab2afd404cf578136ef2cc5dfb50baa1761b68c9da1fb1e4eed343c9/docopt-0.6.2.tar.gz</span><br><span class="line">Collecting requests&gt;=2.7.0 (from hdfs)</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/7d/e3/20f3d364d6c8e5d2353c72a67778eb189176f08e873c9900e10c0287b84b/requests-2.21.0-py2.py3-none-any.whl (57kB)</span><br><span class="line">     |################################| 61kB 657kB/s </span><br><span class="line">Collecting six&gt;=1.9.0 (from hdfs)</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/d9/5a/e7c31adbe875f2abbb91bd84cf2dc52d792b5a01506781dbcf25c91daf11/six-1.16.0-py2.py3-none-any.whl</span><br><span class="line">Collecting chardet&lt;3.1.0,&gt;=3.0.2 (from requests&gt;=2.7.0-&gt;hdfs)</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/bc/a9/01ffebfb562e4274b6487b4bb1ddec7ca55ec7510b22e4c51f14098443b8/chardet-3.0.4-py2.py3-none-any.whl (133kB)</span><br><span class="line">     |################################| 143kB 1.8MB/s </span><br><span class="line">Collecting idna&lt;2.9,&gt;=2.5 (from requests&gt;=2.7.0-&gt;hdfs)</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/14/2c/cd551d81dbe15200be1cf41cd03869a46fe7226e7450af7a6545bfc474c9/idna-2.8-py2.py3-none-any.whl (58kB)</span><br><span class="line">     |################################| 61kB 1.2MB/s </span><br><span class="line">Collecting certifi&gt;=2017.4.17 (from requests&gt;=2.7.0-&gt;hdfs)</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/37/45/946c02767aabb873146011e665728b680884cd8fe70dde973c640e45b775/certifi-2021.10.8-py2.py3-none-any.whl (149kB)</span><br><span class="line">     |################################| 153kB 5.8MB/s </span><br><span class="line">Collecting urllib3&lt;1.25,&gt;=1.21.1 (from requests&gt;=2.7.0-&gt;hdfs)</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/01/11/525b02e4acc0c747de8b6ccdab376331597c569c42ea66ab0a1dbd36eca2/urllib3-1.24.3-py2.py3-none-any.whl (118kB)</span><br><span class="line">     |################################| 122kB 7.6MB/s </span><br><span class="line">Building wheels for collected packages: docopt</span><br><span class="line">  Building wheel for docopt (setup.py) ... done</span><br><span class="line">  Stored in directory: /root/.cache/pip/wheels/9b/04/dd/7daf4150b6d9b12949298737de9431a324d4b797ffd63f526e</span><br><span class="line">Successfully built docopt</span><br><span class="line">Installing collected packages: docopt, chardet, idna, certifi, urllib3, requests, six, hdfs</span><br><span class="line">Successfully installed certifi-2021.10.8 chardet-3.0.4 docopt-0.6.2 hdfs-2.6.0 idna-2.8 requests-2.21.0 six-1.16.0 urllib3-1.24.3</span><br><span class="line">root@example-hadoopservice-hadoop-master-0:~/homework# python3</span><br><span class="line">Python 3.4.3 (default, Oct 14 2015, 20:28:29) </span><br><span class="line">[GCC 4.8.4] on linux</span><br><span class="line">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; from hdfs.client import Client</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; client = Client(<span class="string">&quot;http://192.168.221.128:32525&quot;</span>)</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; client.upload(<span class="string">&quot;/input_python&quot;</span>, <span class="string">&quot;Alice.txt&quot;</span>)</span></span><br><span class="line">&#x27;/input_python/Alice.txt&#x27;</span><br><span class="line"><span class="meta">&gt;</span><span class="bash">&gt;&gt; client.download(<span class="string">&quot;/input_python/Alice.txt&quot;</span>,<span class="string">&quot;/root/homework/Alice.txt-download-by-python&quot;</span>)</span></span><br><span class="line">&#x27;/root/homework/Alice.txt-download-by-python&#x27;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="step8-python上传验证"><a href="#step8-python上传验证" class="headerlink" title="step8:python上传验证"></a>step8:python上传验证</h3><p>通过前台查看<a target="_blank" rel="noopener" href="http://192.168.221.128:32525/explorer.html#/input_python">http://192.168.221.128:32525/explorer.html#/input_python</a></p>
+<p><img src="C:\Users\User2\AppData\Roaming\Typora\typora-user-images\image-20220305221554363.png" alt="image-20220305221554363"></p>
+<h3 id="step9-python下载"><a href="#step9-python下载" class="headerlink" title="step9:python下载"></a>step9:python下载</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">client.download(<span class="string">&quot;/input_python/Alice.txt&quot;</span> <span class="string">&quot;/root/homework/Alice.txt-download-by-python&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="step10-python下载验证"><a href="#step10-python下载验证" class="headerlink" title="step10:python下载验证"></a>step10:python下载验证</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@example-hadoopservice-hadoop-master-0:~/homework# ls -al</span><br><span class="line">total 2104</span><br><span class="line">drwxr-xr-x 1 root root     130 Mar  5 14:14 .</span><br><span class="line">drwx------ 1 root root     126 Mar  5 13:49 ..</span><br><span class="line">-rw-r--r-- 1 root root  144737 Mar  5 07:55 Alice.txt</span><br><span class="line">-rw-r--r-- 1 root root  144737 Mar  5 08:08 Alice.txt-download</span><br><span class="line">-rw-r--r-- 1 root root  144737 Mar  5 14:10 Alice.txt-download-by-python</span><br><span class="line">-rw-r--r-- 1 root root 1708647 Feb 22  2021 get-pip.py</span><br><span class="line">root@example-hadoopservice-hadoop-master-0:~/homework# </span><br></pre></td></tr></table></figure>
+
+<h2 id="作业3-使用-Hadoop-内置的示例程序完成词频统计实验"><a href="#作业3-使用-Hadoop-内置的示例程序完成词频统计实验" class="headerlink" title="作业3:使用 Hadoop 内置的示例程序完成词频统计实验"></a>作业3:使用 Hadoop 内置的示例程序完成词频统计实验</h2><h3 id="step1-使用内置的程序对alice文件进行词频统计"><a href="#step1-使用内置的程序对alice文件进行词频统计" class="headerlink" title="step1:使用内置的程序对alice文件进行词频统计"></a>step1:使用内置的程序对alice文件进行词频统计</h3><p>执行命令hadoop jar /hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0.jar wordcount /input_python/ /output_python/</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">root@example-hadoopservice-hadoop-master-0:~/homework# hadoop jar /hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.6.0.jar wordcount /input_python/ /output_python/</span><br><span class="line">22/03/05 14:41:33 INFO client.RMProxy: Connecting to ResourceManager at example-hadoopservice-hadoop-master-0.example-hadoopservice-hadoop-master-svc.default.svc.cluster.local/10.244.1.168:8032</span><br><span class="line">22/03/05 14:41:34 INFO input.FileInputFormat: Total input paths to process : 1</span><br><span class="line">22/03/05 14:41:34 INFO mapreduce.JobSubmitter: number of splits:1</span><br><span class="line">22/03/05 14:41:34 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1646490810811_0002</span><br><span class="line">22/03/05 14:41:34 INFO impl.YarnClientImpl: Submitted application application_1646490810811_0002</span><br><span class="line">22/03/05 14:41:34 INFO mapreduce.Job: The url to track the job: http://example-hadoopservice-hadoop-master-0.example-hadoopservice-hadoop-master-svc.default.svc.cluster.local:8088/proxy/application_1646490810811_0002/</span><br><span class="line">22/03/05 14:41:34 INFO mapreduce.Job: Running job: job_1646490810811_0002</span><br><span class="line">22/03/05 14:41:38 INFO mapreduce.Job: Job job_1646490810811_0002 running in uber mode : false</span><br><span class="line">22/03/05 14:41:38 INFO mapreduce.Job:  map 0% reduce 0%</span><br><span class="line">22/03/05 14:41:44 INFO mapreduce.Job:  map 100% reduce 0%</span><br><span class="line">22/03/05 14:41:58 INFO mapreduce.Job:  map 100% reduce 67%</span><br><span class="line">22/03/05 14:41:59 INFO mapreduce.Job:  map 100% reduce 100%</span><br><span class="line">22/03/05 14:42:00 INFO mapreduce.Job: Job job_1646490810811_0002 completed successfully</span><br><span class="line">22/03/05 14:42:01 INFO mapreduce.Job: Counters: 49</span><br><span class="line">File System Counters</span><br><span class="line">FILE: Number of bytes read=71649</span><br><span class="line">FILE: Number of bytes written=355413</span><br><span class="line">FILE: Number of read operations=0</span><br><span class="line">FILE: Number of large read operations=0</span><br><span class="line">FILE: Number of write operations=0</span><br><span class="line">HDFS: Number of bytes read=144941</span><br><span class="line">HDFS: Number of bytes written=50811</span><br><span class="line">HDFS: Number of read operations=6</span><br><span class="line">HDFS: Number of large read operations=0</span><br><span class="line">HDFS: Number of write operations=2</span><br><span class="line">Job Counters </span><br><span class="line">Launched map tasks=1</span><br><span class="line">Launched reduce tasks=1</span><br><span class="line">Data-local map tasks=1</span><br><span class="line">Total time spent by all maps in occupied slots (ms)=3922</span><br><span class="line">Total time spent by all reduces in occupied slots (ms)=11750</span><br><span class="line">Total time spent by all map tasks (ms)=3922</span><br><span class="line">Total time spent by all reduce tasks (ms)=11750</span><br><span class="line">Total vcore-seconds taken by all map tasks=3922</span><br><span class="line">Total vcore-seconds taken by all reduce tasks=11750</span><br><span class="line">Total megabyte-seconds taken by all map tasks=4016128</span><br><span class="line">Total megabyte-seconds taken by all reduce tasks=12032000</span><br><span class="line">Map-Reduce Framework</span><br><span class="line">Map input records=855</span><br><span class="line">Map output records=26500</span><br><span class="line">Map output bytes=248743</span><br><span class="line">Map output materialized bytes=71649</span><br><span class="line">Input split bytes=204</span><br><span class="line">Combine input records=26500</span><br><span class="line">Combine output records=5301</span><br><span class="line">Reduce input groups=5301</span><br><span class="line">Reduce shuffle bytes=71649</span><br><span class="line">Reduce input records=5301</span><br><span class="line">Reduce output records=5301</span><br><span class="line">Spilled Records=10602</span><br><span class="line">Shuffled Maps =1</span><br><span class="line">Failed Shuffles=0</span><br><span class="line">Merged Map outputs=1</span><br><span class="line">GC time elapsed (ms)=154</span><br><span class="line">CPU time spent (ms)=2350</span><br><span class="line">Physical memory (bytes) snapshot=366796800</span><br><span class="line">Virtual memory (bytes) snapshot=3917611008</span><br><span class="line">Total committed heap usage (bytes)=307757056</span><br><span class="line">Shuffle Errors</span><br><span class="line">BAD_ID=0</span><br><span class="line">CONNECTION=0</span><br><span class="line">IO_ERROR=0</span><br><span class="line">WRONG_LENGTH=0</span><br><span class="line">WRONG_MAP=0</span><br><span class="line">WRONG_REDUCE=0</span><br><span class="line">File Input Format Counters </span><br><span class="line">Bytes Read=144737</span><br><span class="line">File Output Format Counters </span><br><span class="line">Bytes Written=50811</span><br><span class="line">root@example-hadoopservice-hadoop-master-0:~/homework#</span><br></pre></td></tr></table></figure>
+
+<h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><blockquote>
+<p>测试过程中发现hadoop的ResourceManager服务突然异常退出，导致无法正常执行mapreduce，报出无法连ResourceManager的错误，通过分析hadoop master节点的启动脚本/entrypoint.sh发现启动命令为/hadoop/sbin/start-all.sh，故重新执行/hadoop/sbin/start-all.sh后，ResourceManager恢复</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">root@example-hadoopservice-hadoop-master-0:/# /hadoop/sbin/start-all.sh</span><br><span class="line">This script is Deprecated. Instead use start-dfs.sh and start-yarn.sh</span><br><span class="line">Starting namenodes on [example-hadoopservice-hadoop-master-0.example-hadoopservice-hadoop-master-svc.default.svc.cluster.local]</span><br><span class="line">example-hadoopservice-hadoop-master-0.example-hadoopservice-hadoop-master-svc.default.svc.cluster.local: namenode running as process 297. Stop it first.</span><br><span class="line">example-hadoopservice-hadoop-slave-2.example-hadoopservice-hadoop-slave-svc.default.svc.cluster.local: datanode running as process 41. Stop it first.</span><br><span class="line">example-hadoopservice-hadoop-slave-0.example-hadoopservice-hadoop-slave-svc.default.svc.cluster.local: datanode running as process 42. Stop it first.</span><br><span class="line">example-hadoopservice-hadoop-slave-1.example-hadoopservice-hadoop-slave-svc.default.svc.cluster.local: datanode running as process 42. Stop it first.</span><br><span class="line">Starting secondary namenodes [0.0.0.0]</span><br><span class="line">0.0.0.0: secondarynamenode running as process 482. Stop it first.</span><br><span class="line">starting yarn daemons</span><br><span class="line">starting resourcemanager, logging to /hadoop/logs/yarn-root-resourcemanager-example-hadoopservice-hadoop-master-0.out</span><br><span class="line">example-hadoopservice-hadoop-slave-2.example-hadoopservice-hadoop-slave-svc.default.svc.cluster.local: nodemanager running as process 141. Stop it first.</span><br><span class="line">example-hadoopservice-hadoop-slave-0.example-hadoopservice-hadoop-slave-svc.default.svc.cluster.local: nodemanager running as process 142. Stop it first.</span><br><span class="line">example-hadoopservice-hadoop-slave-1.example-hadoopservice-hadoop-slave-svc.default.svc.cluster.local: nodemanager running as process 142. Stop it first.</span><br><span class="line">root@example-hadoopservice-hadoop-master-0:/#</span><br></pre></td></tr></table></figure>
+
+<h3 id="step2-查看结果"><a href="#step2-查看结果" class="headerlink" title="step2:查看结果"></a>step2:查看结果</h3><ul>
+<li>执行命令hadoop fs -cat /output_python/*|more</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">root@example-hadoopservice-hadoop-master-0:~/homework# hadoop fs -cat /output_python/*|more</span><br><span class="line">&quot;&#x27;TIS 1</span><br><span class="line">&quot;--SAID 1</span><br><span class="line">&quot;Come 1</span><br><span class="line">&quot;Coming 1</span><br><span class="line">&quot;Edwin 1</span><br><span class="line">&quot;French, 1</span><br><span class="line">&quot;HOW 1</span><br><span class="line">&quot;He&#x27;s 1</span><br><span class="line">&quot;How 1</span><br><span class="line">&quot;I 8</span><br><span class="line">&quot;I&#x27;ll 2</span><br><span class="line">&quot;Keep 1</span><br><span class="line">&quot;Let 1</span><br><span class="line">&quot;Such 1</span><br><span class="line">&quot;THEY 1</span><br><span class="line">&quot;There 2</span><br><span class="line">&quot;There&#x27;s 1</span><br><span class="line">&quot;Too 1</span><br><span class="line">&quot;Turtle 1</span><br><span class="line">&quot;Twinkle, 1</span><br><span class="line">&quot;Uglification,&quot;&#x27; 1</span><br><span class="line">&quot;Up 1</span><br><span class="line">&quot;What 2</span><br><span class="line">&quot;Who 1</span><br><span class="line">&quot;William 1</span><br><span class="line">&quot;With 1</span><br><span class="line">&quot;YOU 1</span><br><span class="line">&quot;You 2</span><br><span class="line">&quot;come 1</span><br><span class="line">&quot;it&quot; 2</span><br><span class="line">&quot;much 1</span><br><span class="line">&quot;poison&quot; 1</span><br><span class="line">&quot;purpose&quot;?&#x27; 1</span><br><span class="line">&#x27;em 3</span><br><span class="line">&#x27;tis 2</span><br><span class="line">(Alice 4</span><br><span class="line">(And, 1</span><br><span class="line">(As 1</span><br><span class="line">(Before 1</span><br><span class="line">(Dinah 1</span><br><span class="line">(For, 1</span><br><span class="line">(He 1</span><br><span class="line">(IF 1</span><br><span class="line">(In 1</span><br><span class="line">(It 1</span><br><span class="line">(Sounds 1</span><br><span class="line">(The 3</span><br><span class="line">(WITH 1</span><br><span class="line">(We 1</span><br><span class="line">(Which 2</span><br><span class="line">(`I 2</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>输出结果文件如下：</li>
+</ul>
+<p><img src="C:\Users\User2\AppData\Roaming\Typora\typora-user-images\image-20220305225525418.png" alt="image-20220305225525418"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/28/%E5%9B%BE%E5%BA%8A%E8%AE%BE%E7%BD%AE%E6%96%B9%E6%B3%95/" rel="prev" title="图床设置方法">
+                  <i class="fa fa-chevron-left"></i> 图床设置方法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/03/14/%E5%A6%82%E4%BD%95%E5%9C%A8mac%E7%9A%84%E7%BB%88%E7%AB%AF%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%94%A8App%E6%89%93%E5%BC%80%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6/" rel="next" title="如何在mac的终端环境下用App打开一个文件">
+                  如何在mac的终端环境下用App打开一个文件 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sandszy</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
