@@ -22,9 +22,9 @@
 <script class="next-config" data-name="main" type="application/json">{"hostname":"sandszy.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
     <meta property="og:type" content="website">
-<meta property="og:title" content="All things are dificult before they are easy.">
+<meta property="og:title" content="All things are difficult before they are easy.">
 <meta property="og:url" content="http://sandszy.github.io/index.html">
-<meta property="og:site_name" content="All things are dificult before they are easy.">
+<meta property="og:site_name" content="All things are difficult before they are easy.">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="sandszy">
 <meta name="twitter:card" content="summary">
@@ -37,7 +37,7 @@
 <script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"index.html","title":""}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>All things are dificult before they are easy.</title>
+<title>All things are difficult before they are easy.</title>
   
 
 
@@ -67,7 +67,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">All things are dificult before they are easy.</h1>
+      <h1 class="site-title">All things are difficult before they are easy.</h1>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -181,12 +181,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="All things are dificult before they are easy.">
+      <meta itemprop="name" content="All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | All things are dificult before they are easy.">
+      <meta itemprop="name" content="undefined | All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -209,7 +209,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-12-21 11:17:46" itemprop="dateModified" datetime="2025-12-21T11:17:46+08:00">2025-12-21</time>
+      <time title="Modified: 2026-03-22 22:13:18" itemprop="dateModified" datetime="2026-03-22T22:13:18+08:00">2026-03-22</time>
     </span>
 
   
@@ -223,6 +223,35 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>参考官方文档：<a target="_blank" rel="noopener" href="https://book.kubebuilder.io/quick-start.html">https://book.kubebuilder.io/quick-start.html</a></p>
+<h1 id="注意要点"><a href="#注意要点" class="headerlink" title="注意要点"></a>注意要点</h1><ol>
+<li>创建项目</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir guestbook</span><br><span class="line">cd guestbook</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--domain用于拼接API的group</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--repo相当于go mod中的模块名称</span></span><br><span class="line">kubebuilder init --domain szy.domain --repo szy.domain/guestbook</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>创建API</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--controller 生成controller实例代码</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--resource 生成自定义对象的结构体代码</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--group 的值会和第一步中domain的值拼接形成最终的group</span></span><br><span class="line">kubebuilder create api --group webapp --version v1 --kind Guestbook --controller --resource</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[!NOTE]</p>
+<p>结构体的代码生成在api&#x2F;vi目录下，对应的控制器代码生成在internal&#x2F;controller目录下。</p>
+<p>如果修改了xxx_types.go的结构体代码需要，只需make generate命令重新生成深拷贝等相关代码文件，具体其执行逻辑可以看Makefile下的”.PHONY: generate”部分。</p>
+</blockquote>
+<ol start="3">
+<li>创建crd定义，rbac权限等。If you are editing the API definitions, generate the manifests such as Custom Resources (CRs) or Custom Resource Definitions (CRDs) using</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">该命令会根据internal/controller/guestbook_controller.go文件中的+kubebuilder相关的脚手架注释生成yaml配置文件到config目录下。</span></span><br><span class="line">make manifests</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>主要控制器逻辑的开发在internal&#x2F;controller&#x2F;guestbook_controller.go文件的Reconcile方法中。</li>
+<li>核心注册控制器的方法如下：</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 该方法的核心目的是：将 Guestbook 控制器与 Manager 关联，定义控制器要监听的资源类型，并完成控制器的初始化注册，使控制器能够加入 Kubernetes 的调和（Reconcile）循环。</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r *GuestbookReconciler)</span></span> SetupWithManager(mgr ctrl.Manager) <span class="type">error</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> ctrl.NewControllerManagedBy(mgr).  <span class="comment">// 1. 基于 Manager 创建控制器构建器</span></span><br><span class="line">		For(&amp;webappv1.Guestbook&#123;&#125;).          <span class="comment">// 2. 指定控制器的核心监听资源</span></span><br><span class="line">		Named(<span class="string">&quot;guestbook&quot;</span>).                  <span class="comment">// 3. 为控制器命名</span></span><br><span class="line">		Complete(r)                          <span class="comment">// 4. 完成控制器初始化并关联 Reconciler</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1><p>参考官方文档：<a target="_blank" rel="noopener" href="https://book.kubebuilder.io/getting-started.html">https://book.kubebuilder.io/getting-started.html</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir memcached-operator</span><br><span class="line">cd memcached-operator</span><br><span class="line">kubebuilder init --domain szy.domain --repo szy.domain/memcached</span><br><span class="line">kubebuilder create api --group cache --version v1alpha1 --kind Memcached --controller --resource</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -257,12 +286,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="All things are dificult before they are easy.">
+      <meta itemprop="name" content="All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | All things are dificult before they are easy.">
+      <meta itemprop="name" content="undefined | All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -277,9 +306,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2025-12-16 14:37:17 / Modified: 14:46:49" itemprop="dateCreated datePublished" datetime="2025-12-16T14:37:17+08:00">2025-12-16</time>
+      <time title="Created: 2025-12-16 14:37:17" itemprop="dateCreated datePublished" datetime="2025-12-16T14:37:17+08:00">2025-12-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-03-03 23:04:30" itemprop="dateModified" datetime="2026-03-03T23:04:30+08:00">2026-03-03</time>
     </span>
 
   
@@ -300,6 +335,9 @@
 <p>安装后创建虚拟机实例：</p>
 <p><a target="_blank" rel="noopener" href="https://documentation.ubuntu.com/multipass/latest/how-to-guides/manage-instances/create-an-instance/#how-to-guides-manage-instances-create-an-instance">https://documentation.ubuntu.com/multipass/latest/how-to-guides/manage-instances/create-an-instance/#how-to-guides-manage-instances-create-an-instance</a></p>
 <p>记得把CPU调整成8，内存调整成12G，磁盘调整成40G，才够用。（我的电脑是M4 16G 256G的Macbook AIr）</p>
+<p>multipass的基本操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">列出虚拟机</span></span><br><span class="line">multipass list</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">启动虚拟机，其中primary是虚拟机的名字</span></span><br><span class="line">multipass start primary</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -334,12 +372,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="All things are dificult before they are easy.">
+      <meta itemprop="name" content="All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | All things are dificult before they are easy.">
+      <meta itemprop="name" content="undefined | All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -415,12 +453,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="All things are dificult before they are easy.">
+      <meta itemprop="name" content="All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | All things are dificult before they are easy.">
+      <meta itemprop="name" content="undefined | All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -577,12 +615,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="All things are dificult before they are easy.">
+      <meta itemprop="name" content="All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | All things are dificult before they are easy.">
+      <meta itemprop="name" content="undefined | All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -605,7 +643,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-12-21 11:17:38" itemprop="dateModified" datetime="2025-12-21T11:17:38+08:00">2025-12-21</time>
+      <time title="Modified: 2026-02-25 22:05:51" itemprop="dateModified" datetime="2026-02-25T22:05:51+08:00">2026-02-25</time>
     </span>
 
   
@@ -621,6 +659,9 @@
           <h1 id="如何用kind创建一个k8s集群"><a href="#如何用kind创建一个k8s集群" class="headerlink" title="如何用kind创建一个k8s集群"></a>如何用kind创建一个k8s集群</h1><p>参考其官网：<a target="_blank" rel="noopener" href="https://kind.sigs.k8s.io/docs/user/quick-start/">https://kind.sigs.k8s.io/docs/user/quick-start/</a></p>
 <p>选择<a target="_blank" rel="noopener" href="https://kind.sigs.k8s.io/docs/user/quick-start/#installing-from-release-binaries">Installing From Release Binaries</a></p>
 <p>配置后连接集群的kubeconfig在：root用户的 ~&#x2F;.kube&#x2F;config中</p>
+<p>其中kind的配置文件如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">kind: Cluster</span><br><span class="line">apiVersion: kind.x-k8s.io/v1alpha4</span><br><span class="line">networking:</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">将地址改为宿主机IP或0.0.0.0</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">注意：使用0.0.0.0会监听所有接口，可能存在安全风险</span></span><br><span class="line">  apiServerAddress: &quot;0.0.0.0&quot; # 或者换成你的宿主机IP，或者0.0.0.0</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">如果需要指定端口，可以设置：</span></span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">apiServerPort: 6443</span></span><br><span class="line"></span><br><span class="line">nodes:</span><br><span class="line">- role: control-plane</span><br><span class="line">  kubeadmConfigPatches:</span><br><span class="line">  - |</span><br><span class="line">    kind: ClusterConfiguration</span><br><span class="line">    apiServer:</span><br><span class="line">      certSANs:</span><br><span class="line">      - &quot;localhost&quot;</span><br><span class="line">      - &quot;127.0.0.1&quot;</span><br><span class="line">      - &quot;0.0.0.0&quot;</span><br><span class="line">      - &quot;192.168.2.3&quot;        # 你的主机IP，当集群部署在虚拟机网络环境内时，必须配置，不然kubectl无法通过证书连接集群</span><br><span class="line">      - &quot;primary&quot;       # 其他要访问的主机IP</span><br><span class="line">      - &quot;kubernetes&quot;            # 服务名</span><br><span class="line">      - &quot;kubernetes.default&quot;</span><br><span class="line">      - &quot;kubernetes.default.svc&quot;</span><br><span class="line">      - &quot;kubernetes.default.svc.cluster.local&quot;</span><br><span class="line">- role: worker</span><br><span class="line">- role: worker</span><br><span class="line">- role: worker</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -655,12 +696,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="All things are dificult before they are easy.">
+      <meta itemprop="name" content="All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | All things are dificult before they are easy.">
+      <meta itemprop="name" content="undefined | All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -766,12 +807,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="All things are dificult before they are easy.">
+      <meta itemprop="name" content="All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | All things are dificult before they are easy.">
+      <meta itemprop="name" content="undefined | All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -856,12 +897,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="All things are dificult before they are easy.">
+      <meta itemprop="name" content="All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | All things are dificult before they are easy.">
+      <meta itemprop="name" content="undefined | All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -951,12 +992,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="All things are dificult before they are easy.">
+      <meta itemprop="name" content="All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | All things are dificult before they are easy.">
+      <meta itemprop="name" content="undefined | All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -1075,12 +1116,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="All things are dificult before they are easy.">
+      <meta itemprop="name" content="All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | All things are dificult before they are easy.">
+      <meta itemprop="name" content="undefined | All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -1161,7 +1202,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2025</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -21,15 +21,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"sandszy.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="安装参考官方文档：https:&#x2F;&#x2F;book.kubebuilder.io&#x2F;quick-start.html">
+    <meta name="description" content="安装参考官方文档：https:&#x2F;&#x2F;book.kubebuilder.io&#x2F;quick-start.html 注意要点 创建项目  12345mkdir guestbookcd guestbook# --domain用于拼接API的group# --repo相当于go mod中的模块名称kubebuilder init --domain szy.domain --repo szy.domain&#x2F;gu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何使用kubebuilder开发自定义控制器">
 <meta property="og:url" content="http://sandszy.github.io/2025/12/17/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8kubebuilder%E5%BC%80%E5%8F%91%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E5%88%B6%E5%99%A8/index.html">
-<meta property="og:site_name" content="All things are dificult before they are easy.">
-<meta property="og:description" content="安装参考官方文档：https:&#x2F;&#x2F;book.kubebuilder.io&#x2F;quick-start.html">
+<meta property="og:site_name" content="All things are difficult before they are easy.">
+<meta property="og:description" content="安装参考官方文档：https:&#x2F;&#x2F;book.kubebuilder.io&#x2F;quick-start.html 注意要点 创建项目  12345mkdir guestbookcd guestbook# --domain用于拼接API的group# --repo相当于go mod中的模块名称kubebuilder init --domain szy.domain --repo szy.domain&#x2F;gu">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-12-17T07:17:38.000Z">
-<meta property="article:modified_time" content="2025-12-21T03:17:46.697Z">
+<meta property="article:modified_time" content="2026-03-22T14:13:18.282Z">
 <meta property="article:author" content="sandszy">
 <meta property="article:tag" content="kubernetes">
 <meta name="twitter:card" content="summary">
@@ -42,7 +42,7 @@
 <script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://sandszy.github.io/2025/12/17/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8kubebuilder%E5%BC%80%E5%8F%91%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%A7%E5%88%B6%E5%99%A8/","path":"2025/12/17/如何使用kubebuilder开发自定义控制器/","title":"如何使用kubebuilder开发自定义控制器"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>如何使用kubebuilder开发自定义控制器 | All things are dificult before they are easy.</title>
+<title>如何使用kubebuilder开发自定义控制器 | All things are difficult before they are easy.</title>
   
 
 
@@ -72,7 +72,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <p class="site-title">All things are dificult before they are easy.</p>
+      <p class="site-title">All things are difficult before they are easy.</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -118,7 +118,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E8%A6%81%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">注意要点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">3.</span> <span class="nav-text">例子</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -188,12 +188,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="All things are dificult before they are easy.">
+      <meta itemprop="name" content="All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="如何使用kubebuilder开发自定义控制器 | All things are dificult before they are easy.">
+      <meta itemprop="name" content="如何使用kubebuilder开发自定义控制器 | All things are difficult before they are easy.">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -216,7 +216,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-12-21 11:17:46" itemprop="dateModified" datetime="2025-12-21T11:17:46+08:00">2025-12-21</time>
+      <time title="Modified: 2026-03-22 22:13:18" itemprop="dateModified" datetime="2026-03-22T22:13:18+08:00">2026-03-22</time>
     </span>
 
   
@@ -230,6 +230,35 @@
     
     <div class="post-body" itemprop="articleBody">
         <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>参考官方文档：<a target="_blank" rel="noopener" href="https://book.kubebuilder.io/quick-start.html">https://book.kubebuilder.io/quick-start.html</a></p>
+<h1 id="注意要点"><a href="#注意要点" class="headerlink" title="注意要点"></a>注意要点</h1><ol>
+<li>创建项目</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mkdir guestbook</span><br><span class="line">cd guestbook</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--domain用于拼接API的group</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--repo相当于go mod中的模块名称</span></span><br><span class="line">kubebuilder init --domain szy.domain --repo szy.domain/guestbook</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>创建API</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--controller 生成controller实例代码</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--resource 生成自定义对象的结构体代码</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">--group 的值会和第一步中domain的值拼接形成最终的group</span></span><br><span class="line">kubebuilder create api --group webapp --version v1 --kind Guestbook --controller --resource</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[!NOTE]</p>
+<p>结构体的代码生成在api&#x2F;vi目录下，对应的控制器代码生成在internal&#x2F;controller目录下。</p>
+<p>如果修改了xxx_types.go的结构体代码需要，只需make generate命令重新生成深拷贝等相关代码文件，具体其执行逻辑可以看Makefile下的”.PHONY: generate”部分。</p>
+</blockquote>
+<ol start="3">
+<li>创建crd定义，rbac权限等。If you are editing the API definitions, generate the manifests such as Custom Resources (CRs) or Custom Resource Definitions (CRDs) using</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">该命令会根据internal/controller/guestbook_controller.go文件中的+kubebuilder相关的脚手架注释生成yaml配置文件到config目录下。</span></span><br><span class="line">make manifests</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>主要控制器逻辑的开发在internal&#x2F;controller&#x2F;guestbook_controller.go文件的Reconcile方法中。</li>
+<li>核心注册控制器的方法如下：</li>
+</ol>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 该方法的核心目的是：将 Guestbook 控制器与 Manager 关联，定义控制器要监听的资源类型，并完成控制器的初始化注册，使控制器能够加入 Kubernetes 的调和（Reconcile）循环。</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r *GuestbookReconciler)</span></span> SetupWithManager(mgr ctrl.Manager) <span class="type">error</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> ctrl.NewControllerManagedBy(mgr).  <span class="comment">// 1. 基于 Manager 创建控制器构建器</span></span><br><span class="line">		For(&amp;webappv1.Guestbook&#123;&#125;).          <span class="comment">// 2. 指定控制器的核心监听资源</span></span><br><span class="line">		Named(<span class="string">&quot;guestbook&quot;</span>).                  <span class="comment">// 3. 为控制器命名</span></span><br><span class="line">		Complete(r)                          <span class="comment">// 4. 完成控制器初始化并关联 Reconciler</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h1><p>参考官方文档：<a target="_blank" rel="noopener" href="https://book.kubebuilder.io/getting-started.html">https://book.kubebuilder.io/getting-started.html</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir memcached-operator</span><br><span class="line">cd memcached-operator</span><br><span class="line">kubebuilder init --domain szy.domain --repo szy.domain/memcached</span><br><span class="line">kubebuilder create api --group cache --version v1alpha1 --kind Memcached --controller --resource</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -271,7 +300,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2025</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
