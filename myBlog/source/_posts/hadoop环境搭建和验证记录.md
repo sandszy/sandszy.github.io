@@ -140,7 +140,7 @@ Last contact: Sat Mar 05 07:36:18 UTC 2022
 ```
 - 打开web页面查看总览信息
 
-![image-20220305153935431](C:\Users\User2\AppData\Roaming\Typora\typora-user-images\image-20220305153935431.png)
+<!-- 原截图已丢失：image-20220305153935431.png 只保存在 Typora 本地缓存中，未随文章上传 -->
 
 
 
@@ -186,7 +186,7 @@ drwxr-xr-x   - root supergroup          0 2022-03-05 08:01 /input
 
 - 通过web前台查看http://192.168.221.128:32525/explorer.html#/input
 
-![image-20220305160418272](C:\Users\User2\AppData\Roaming\Typora\typora-user-images\image-20220305160418272.png)
+<!-- 原截图已丢失：image-20220305160418272.png 只保存在 Typora 本地缓存中，未随文章上传 -->
 
 ### step4:shell下载文件
 
@@ -360,7 +360,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 通过前台查看http://192.168.221.128:32525/explorer.html#/input_python
 
-![image-20220305221554363](C:\Users\User2\AppData\Roaming\Typora\typora-user-images\image-20220305221554363.png)
+<!-- 原截图已丢失：image-20220305221554363.png 只保存在 Typora 本地缓存中，未随文章上传 -->
 
 ### step9:python下载
 
@@ -545,4 +545,4 @@ root@example-hadoopservice-hadoop-master-0:~/homework# hadoop fs -cat /output_py
 
 - 输出结果文件如下：
 
-![image-20220305225525418](C:\Users\User2\AppData\Roaming\Typora\typora-user-images\image-20220305225525418.png)
+<!-- 原截图已丢失：image-20220305225525418.png 只保存在 Typora 本地缓存中，未随文章上传 -->
